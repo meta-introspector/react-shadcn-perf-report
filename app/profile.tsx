@@ -64,9 +64,9 @@ const PerformanceAnalyzer = () => {
   const processedData = useMemo(() => {
     return sampleData.map(func => ({
       name: func.functionName.split('::').pop(),
-      //      v1: func.metrics[selectedTest].v1,
-      //      v2: func.metrics[selectedTest].v2,
-      //      v3: func.metrics[selectedTest].v3
+      v1: func.metrics[selectedTest].v1,
+      v2: func.metrics[selectedTest].v2,
+      v3: func.metrics[selectedTest].v3
     }));
   }, [selectedTest, sampleData]);
 
