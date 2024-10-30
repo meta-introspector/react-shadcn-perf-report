@@ -25,15 +25,18 @@ export type Value=string;
 export type LinesT = LineT[];
 
 export type ReactReplPropsT = {
-    title?: string;
-    stealFocus?: boolean;
-    tabs?: string[];
-    selectedTab?: string;
-    //onChangeTab: (tab: string) => void;
-    onClear?: () => void;
-    //onSubmit: (input: string) => void;
-    lines: LinesT;
-    height: number;
+  title?: string;
+  stealFocus?: boolean;
+  tabs?: string[];
+  selectedTab?: string;
+  //onChangeTab: (tab: string) => void;
+  onClear?: () => void;
+  //onSubmit: (input: string) => void;
+  submitCodeRef?: React.RefObject<(execLine: string) => Promise<void>>;
+  lines: LinesT;
+  initialLines?: LinesT;
+  initiallyExecute?: string[];
+  height: number;
 };
 
 async function execAndGetLine(execLine: string): Promise<LineT> {
@@ -59,9 +62,9 @@ export type FCReactReplPropsT = FC<ReactReplPropsT>;
 //   selectedTab?: string;
 // //  onChangeTab?: (tab: string) => void;
 //   initialLines?: Lines //Array<{ type: string; value: string }>;
-//   initiallyExecute?: string[];
+
 //   height?: string | number;
-//   submitCodeRef?: React.RefObject<(execLine: string) => Promise<void>>;
+
 // }
 
 export const ReactReplJS: FCReactReplPropsT = ({
@@ -69,12 +72,12 @@ export const ReactReplJS: FCReactReplPropsT = ({
   tabs,
   selectedTab,
 //  onChangeTab,
-  initialLines = [],
+    initialLines = [],
   initiallyExecute = [],
   height,
 //  submitCodeRef = null,
 }) => {
-  const [lines, setLines] = useState<Lines>(initialLines)
+  const [lines, setLines] = useState<LinesT>(initialLines)
 
   // const onSubmit = async (execLine: string) => {
   //   const newLines = lines.concat([{ type: "input", value: execLine }])
@@ -88,7 +91,7 @@ export const ReactReplJS: FCReactReplPropsT = ({
   useEffect(() => {
     ;(async () => {
       if (initiallyExecute.length === 0) return
-      const lines: Lines = []
+      const lines: LinesT = []
       for (const execLine of initiallyExecute) {
         lines.push({ type: "input", value: execLine })
         if (!execLine.trim()) continue
