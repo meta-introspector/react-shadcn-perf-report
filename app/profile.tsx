@@ -15,13 +15,17 @@ import {
 } from "@/components/ui/select";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-//type Version = 'v1' | 'v2' | 'v3';
 type TestCase = 'test1' | 'test2';
 
+type Stats = {
+  total: number;
+  count: number;
+  // min: number;
+  // max: number;
+};
+
 interface VersionMetrics {
-  v1: number;
-  v2: number;
-  v3: number;
+  [key:string]: Stats
 }
 
 interface TestMetrics {
@@ -48,15 +52,16 @@ const PerformanceAnalyzer = () => {
     {
       functionName: "ark_ff::fields::models::fp::montgomery_backend::MontBackend",
       metrics: {
-        test1: { v1: 1000, v2: 1200, v3: 800 },
-        test2: { v1: 900, v2: 950, v3: 850 }
+        test1: { v1: { total:1000, count:3},
+          v2: { total:1000, count:3} }
       }
     },
     {
       functionName: "ark_ff::fields::models::fp::standard_backend::StdBackend",
       metrics: {
-        test1: { v1: 1100, v2: 1300, v3: 900 },
-        test2: { v1: 950, v2: 1000, v3: 875 }
+        test1: { v1: { total:1000, count:3},
+	       },
+        test2: { v1: { total:1000, count:3} }
       }
     }
   ];
@@ -64,15 +69,16 @@ const PerformanceAnalyzer = () => {
   const processedData = useMemo(() => {
     return sampleData.map(func => ({
       name: func.functionName.split('::').pop(),
-      v1: func.metrics[selectedTest].v1,
-      v2: func.metrics[selectedTest].v2,
-      v3: func.metrics[selectedTest].v3
+      vm: func.metrics[selectedTest],
+      //      v2: func.metrics[selectedTest].v2,
+      //v3: func.metrics[selectedTest].v3
     }));
   }, [selectedTest, sampleData]);
 
   const getPerformanceStats = (metrics: TestMetrics): PerformanceStats => {
     const allValues = Object.values(metrics)
-      .flatMap(test => Object.values(test));
+      .flatMap(test => Object.values(test))
+      .flatMap(test2 => test2.count);
     const min = Math.min(...allValues);
     const max = Math.max(...allValues);
     const avg = allValues.reduce((a, b) => a + b, 0) / allValues.length;
@@ -102,6 +108,7 @@ const PerformanceAnalyzer = () => {
         </CardHeader>
         <CardContent>
           <div className="h-96 w-full">
+
             <LineChart
               width={1100}
               height={400}
@@ -113,12 +120,15 @@ const PerformanceAnalyzer = () => {
               <YAxis label={{ value: 'Ticks', angle: -90, position: 'insideLeft' }} />
               <Tooltip />
               <Legend />
+
+
               <Line 
                 type="monotone" 
                 dataKey="v1" 
                 stroke="#8884d8" 
                 name="Version 1" 
-              />
+		  />
+		
               <Line 
                 type="monotone" 
                 dataKey="v2" 
@@ -133,6 +143,22 @@ const PerformanceAnalyzer = () => {
               />
             </LineChart>
           </div>
+        </CardContent>
+      </Card>
+
+      
+            <Card>
+        <CardHeader>
+          <CardTitle>Performance Statistics</CardTitle>
+        </CardHeader>
+        <CardContent>
+
+      <h1>debug</h1>
+	<div><pre>DEBUG1{JSON.stringify(
+	  [... new Set(
+	  sampleData.flatMap(func => Object.values(func.metrics)).flatMap(a => Object.keys(a) )
+	  )]
+	  , null, 2) }</pre></div>;
         </CardContent>
       </Card>
 
@@ -158,7 +184,8 @@ const PerformanceAnalyzer = () => {
                   return (
                     <tr key={i}>
                       <td className="p-4 border-b">{func.functionName.split('::').pop()}</td>
-                      <td className="p-4 border-b text-green-600">
+			<td className="p-4 border-b text-green-600">
+
                         {stats.min.toLocaleString()}
                       </td>
                       <td className="p-4 border-b text-red-600">
