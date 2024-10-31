@@ -2,8 +2,9 @@
 // from https://github.com/seamapi/react-repl/blob/main/src/ReactReplJS.js
 // converted with https://js2ts.com 
 
-import React, { useState, useEffect, FC } from "react"
-import { ReactReplView    } from "./ReactReplView"
+import React, { useState, useEffect, FC } from "react";
+
+import { ReactReplView    } from "./ReactReplView";
 
 import prettyFormat from "pretty-format"
 

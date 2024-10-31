@@ -37,16 +37,26 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 # Lisp
 
+Now i am just using lsp,
+```
+typescript-ts-mode
+(straight-use-package 'company-mode)
+lsp
+flycheck-mode
+```
+
+Or
 ```
 (straight-use-package 'tide)
 tide-mode 
-typescript-ts-mode
+
 The major mode is TypeScript[TSX] mode defined in typescript-ts-mode.el:
 flycheck-typescript-tslint-setup
-flycheck-mode
+You can run the command ‘flycheck-typescript-tslint-setup’ with M-x f-ty
+
 flycheck-select-checker (typescript-tslint)
     - major mode:         `tsx-ts-mode' not supported
-	
+You can run the command ‘flycheck-select-checker’ with C-c ! s	
 flycheck-verify-setup
 flycheck-list-errors
 Flycheck Mode is enabled.  Use C-u C-c ! x to enable disabled
