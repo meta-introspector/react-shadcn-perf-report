@@ -3,18 +3,12 @@
 
 import React, { useMemo, useRef } from "react"
 import { ReactReplJS } from "./ReactReplJS"
+import type { EvalCodeFunction } from "./ReactReplJS"
+
 import { ReactReplPropsT } from "./ReactReplJS"
 
-// type SomeProp= {
-//     name: string    
-// };
-// interface ReactReplProps {
-//   [key: string]: SomeProp;
-// }
-
-
 export const useReactReplJS = () => {
-  const submitCodeRef = useRef<((code: string) => Promise<void>) | null>(null)
+  const submitCodeRef = useRef<EvalCodeFunction>()
 
   function submit_job (props: ReactReplPropsT): JSX.Element {
     return <ReactReplJS {...props} submitCodeRef={submitCodeRef} />

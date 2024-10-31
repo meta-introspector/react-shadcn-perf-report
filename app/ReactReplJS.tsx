@@ -1,9 +1,10 @@
+// "use client";
 // from https://github.com/seamapi/react-repl/blob/main/src/ReactReplJS.js
 // converted with https://js2ts.com 
 
 import React, { useState, useEffect, FC } from "react"
-import {ReactReplView    } from "./ReactReplView"
-//import useReactReplJS from "./useReactReplJS"
+import { ReactReplView    } from "./ReactReplView"
+
 import prettyFormat from "pretty-format"
 
 const AsyncFunction: FunctionConstructor = Object.getPrototypeOf(async function () {}).constructor
@@ -23,16 +24,16 @@ function scopeEval(scope: Scope, script: string): Promise<Scope> {
 
 export type Value=string;
 export type LinesT = LineT[];
-
+export type EvalCodeFunction = (code: string) => Promise<string>;
 export type ReactReplPropsT = {
   title?: string;
   stealFocus?: boolean;
   tabs?: string[];
   selectedTab?: string;
-  //onChangeTab: (tab: string) => void;
+  onChangeTab: (tab: string) => void;
   onClear?: () => void;
-  //onSubmit: (input: string) => void;
-  submitCodeRef?: React.RefObject<(execLine: string) => Promise<void>>;
+  onSubmit: (input: string) => void;
+  submitCodeRef: React.MutableRefObject<EvalCodeFunction|undefined|null>;
   lines: LinesT;
   initialLines?: LinesT;
   initiallyExecute?: string[];
@@ -55,38 +56,27 @@ export interface LineT {
 }
 
 export type FCReactReplPropsT = FC<ReactReplPropsT>;
-    
-// interface ReactReplJSProps {
-//   title?: string;
-//   tabs?: string[];
-//   selectedTab?: string;
-// //  onChangeTab?: (tab: string) => void;
-//   initialLines?: Lines //Array<{ type: string; value: string }>;
-
-//   height?: string | number;
-
-// }
 
 export const ReactReplJS: FCReactReplPropsT = ({
   title,
   tabs,
   selectedTab,
-//  onChangeTab,
-    initialLines = [],
+  onChangeTab,
+  initialLines = [],
   initiallyExecute = [],
   height,
-//  submitCodeRef = null,
+  submitCodeRef,
 }) => {
   const [lines, setLines] = useState<LinesT>(initialLines)
 
-  // const onSubmit = async (execLine: string) => {
-  //   const newLines = lines.concat([{ type: "input", value: execLine }])
-  //   setLines(newLines)
-  //   if (!execLine.trim()) return
-  //   setLines(newLines.concat([await execAndGetLine(execLine)]))
-  // }
+  const onSubmit = async (execLine: string) => {
+     const newLines = lines.concat([{ type: "input", value: execLine }])
+     setLines(newLines)
+     if (!execLine.trim()) return
+     setLines(newLines.concat([await execAndGetLine(execLine)]))
+   }
 
-    //if (submitCodeRef) submitCodeRef.current = onSubmit
+  //if (submitCodeRef) submitCodeRef.current = onSubmit;
 
   useEffect(() => {
     ;(async () => {
@@ -106,17 +96,12 @@ export const ReactReplJS: FCReactReplPropsT = ({
       title={title}
       tabs={tabs || ["Javascript"]}
       selectedTab={selectedTab || "Javascript"}
-//      onChangeTab={onChangeTab}
-      //onSubmit={onSubmit}
+      onChangeTab={onChangeTab}
+      onSubmit={onSubmit}
       height={ Number(height)}
       lines={lines}
+      submitCodeRef={submitCodeRef}
       onClear={() => setLines([])}
     />
   )
 }
-
-//export { ReactReplView, useReactReplJS }
-
-//export default ReactReplJS
-
-//function ReactReplView2(args: ReactReplJSPropsT);
