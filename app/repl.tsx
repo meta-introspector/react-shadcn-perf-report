@@ -45,7 +45,7 @@ const GeneralPurposeReplUI = () => {
         } } onSubmit={function (input: string): void {
           //throw new Error("Function not implemented.");
 	  console.log("input", input, eval(input));
-	  lines.append({type:"input",value: input});
+	  //FIXME: lines.append({type:"input",value: input});
 	  
         } }    /></div>
   )
