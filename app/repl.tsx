@@ -3,6 +3,7 @@
 //import './awesome-react-repl';
 //import type { ReactReplJS } from './ReactReplJS';
 import { ReactReplJS } from "./ReactReplJS"
+import { useReactReplJS } from "./useReactReplJS"
 import type {  EvalCodeFunction } from "./types"
 import { ReactRepl } from "./ReactReplView"
 function actionOnChangeTab (){}
@@ -17,14 +18,13 @@ function actionOnClear (){}
 //function submitCodeRef1 (){}
 import React from "react"
 
-//'MutableRefObject<EvalCodeFunction>'.
-//const submitCodeRef = submitCodeRef1;//React.MutableRefObject<EvalCodeFunction>(submitCodeRef1);
 import { useRef } from 'react';
 
 const GeneralPurposeReplUI = () => {
   const submitCodeRef = useRef<EvalCodeFunction|undefined>(undefined); 
   submitCodeRef.current = actionOnSubmit;
 
+  const { submitCode, ReactRepl } = useReactReplJS();
       //   onChangeTab={actionOnChangeTab}
       // onSubmit={actionOnSubmit}
       // submitCodeRef={submitCodeRef}
@@ -45,6 +45,7 @@ const GeneralPurposeReplUI = () => {
         } } onSubmit={function (input: string): void {
           //throw new Error("Function not implemented.");
 	  console.log("input", input, eval(input));
+	  submitCode('alert(`${input}! This will appear in the REPL!`)');
 	  //FIXME: lines.append({type:"input",value: input});
 	  
         } }    /></div>
