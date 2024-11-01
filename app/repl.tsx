@@ -41,7 +41,10 @@ const GeneralPurposeReplUI = () => {
           { type: "input", value: "b" },
           { type: "error", value: "TypeError: b is not defined" },
         ]} onChangeTab={function (tab: string): void {
-          throw new Error("Function not implemented.");
+          //throw new Error("Function not implemented.");
+	  console.log("change tag", tab);
+	  submitCode('alert(`${tab}! This will appear in the REPL!`)');
+
         } } onSubmit={function (input: string): void {
           //throw new Error("Function not implemented.");
 	  console.log("input", input, eval(input));

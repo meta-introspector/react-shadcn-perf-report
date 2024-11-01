@@ -12,7 +12,7 @@ export const useReactReplJS = () => {
     () => {
       return (
         {
-          ReactRepl: (props: React.JSX.IntrinsicAttributes) => (
+          ReactRepl: (props: ReactReplPropsT) => (
             <ReactReplJS {...props} submitCodeRef={submitCodeRef} />
           ),
           submitCode: (code: string): void => {
