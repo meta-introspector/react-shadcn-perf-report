@@ -3,27 +3,26 @@
 
 import React, { useMemo, useRef } from "react"
 import { ReactReplJS } from "./ReactReplJS"
-import type { EvalCodeFunction } from "./ReactReplJS"
-
-import { ReactReplPropsT } from "./ReactReplJS"
+import type { EvalCodeFunction, ReactReplPropsT } from "./types"
 
 export const useReactReplJS = () => {
   const submitCodeRef = useRef<EvalCodeFunction>()
 
-  function submit_job (props: ReactReplPropsT): JSX.Element {
-    return <ReactReplJS {...props} submitCodeRef={submitCodeRef} />
-  }
-  function submit_code (code: string): Promise<string>{
-    if (submitCodeRef.current) {
-      submitCodeRef.current(code)
-    }
-    return new Promise(resolve => resolve("Hello"));
-  }
   return useMemo(
-    () => ({
-      ReactRepl: submit_job,
-      submitCode: submit_code,
-    }),
+    () => {
+      return (
+        {
+          ReactRepl: (props: React.JSX.IntrinsicAttributes) => (
+            <ReactReplJS {...props} submitCodeRef={submitCodeRef} />
+          ),
+          submitCode: (code: string): void => {
+            if (submitCodeRef.current) {
+              submitCodeRef.current(code)
+            }
+          }
+        }
+      )
+    },
     []
   )
 }

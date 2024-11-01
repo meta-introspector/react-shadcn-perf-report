@@ -1,12 +1,10 @@
 "use client"; // This is a client component
 // from https://github.com/seamapi/react-repl/blob/main/src/ReactReplView.js
 // converted with https://js2ts.com
-import React, { useRef, useState, useEffect} from "react"
-import styled from "styled-components"
-//import type LineT from "./ReactReplJS";
-import { ReactReplPropsT,LineT  } from "./ReactReplJS";
-//let ReactReplView2: typeof FCReactReplJSPropsT;
-				      
+import React, { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+import { LineT, ReactReplPropsT } from "./types";
+
 const Container = styled.div`
   font-family: monospace;
   font-weight: bold;
@@ -83,119 +81,106 @@ const TerminalContent = styled.div<{ height: number }>`
   overflow-y: auto;
 `
 
-// export interface Line {
-//     type: 'input' | 'output' | 'error';
-//     value: string;
-// }
-// export type Lines = Line[];
+export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
+  const  stealFocus = args.stealFocus;  const lines = args.lines;  const title = args.title;
+  const tabs = args.tabs;  const selectedTab = args.selectedTab;  const onClear = args.onClear;
+  const height = Number(args.height);
+  const onChangeTab = args.onChangeTab;
+  //const onSubmit = args.onSubmit
+  const inputRef = useRef<HTMLInputElement>(null);
+  const terminalContentRef = useRef<HTMLDivElement>(null);
+  const [activeInputValue, setActiveInputValue] = useState<string>("");
+  const [historySelectIndex, setHistorySelectIndex] = useState<number>(-1);
+  useEffect(() => {
+    if (!terminalContentRef.current) return
+    terminalContentRef.current.scrollTop =
+      terminalContentRef.current.scrollHeight
+  }, [lines])
+  useEffect(() => setHistorySelectIndex(-1), [lines])
+  return (
+    <Container onClick={() => (stealFocus ? inputRef.current?.focus() : null)}>
+    {(title || tabs) && (
+      <Header>
+	<Title>{title}</Title>
+	{tabs && (
+          <Tabs>
+	    {tabs.map((tab: string) => (
+	      <Tab
+		className={tab === selectedTab  ? "selected"   : ""}
+		onClick={(e) => {
+		  if (onChangeTab) {
+		    onChangeTab(tab)
+		  }
+		  e.stopPropagation()
+		  e.preventDefault()
+		}}
+		key={tab}
+	      >
+		  {tab}
+	      </Tab>
+	    ))}
+	      {onClear && <Tab onClick={onClear}>Clear</Tab>}
+	    </Tabs>
+	  )}
+	</Header>
+    )}
+    <TerminalContent height={height} ref={terminalContentRef}>
+      {lines?.map((line: LineT, i: number) =>
+        line.type === "input" ? (
+          <InputLine key={i}>
+            <InputCarat>{">"}</InputCarat>
+            {line.value}
+            </InputLine>
+        )
+        : line.type === "output" ? (<Output key={i}>{line.value}</Output>
+          
+        ) : (
+          <Error key={i}>{line.value.toString()}</Error>
+        )
+          )
+        }	
+	<ActiveInputLine>
+	<InputCarat>{">"}</InputCarat>
+	  <TextInput   onKeyUp={(e) => {
+	    if (e.key === "Enter") {
+	      //onSubmit(activeInputValue)
+	      setActiveInputValue("");
+	    } else if (e.key === "ArrowUp") {
+	      const newHSI = historySelectIndex + 1;
+	      const inputs = lines?.filter((l) =>
+		l.type === "input"
+	      );
+              if(inputs){
+		inputs.reverse();
+		if (newHSI < inputs.length) {
+		  setActiveInputValue(inputs[newHSI].value);
+		setHistorySelectIndex(newHSI);
+		}
+              }
 
-// export type ReactReplProps = { title?: string; stealFocus?: boolean; tabs?: string[]; selectedTab?: string;
-// 			   //onChangeTab: (tab: string) => void;
-// 			   onClear?: () => void;
-// 			   //onSubmit: (input: string) => void;
-// 			   lines: Lines; height: number; }
+	    } else if (e.key === "ArrowDown") {
+	      const newHSI = historySelectIndex - 1;
+	      const inputs = lines?.filter((l) =>
+		l.type === "input"
+	      );
+              if (inputs) {
+		  inputs.reverse();
+		  if (newHSI >= 0) {
+		    setActiveInputValue(inputs[newHSI].value);
+		  setHistorySelectIndex(newHSI);
+		}
+	      }
+	    }
+	  }}
+      onChange={(e) => setActiveInputValue(e.target.value)}
+      value={activeInputValue}
+      ref={inputRef}
+      />
+    </ActiveInputLine>
+      
+      </TerminalContent>
+	</Container>
+  )
+}
 
-//let ReactReplView: typeof FCReactReplJSPropsT;
-
-export function ReactReplView(args: ReactReplPropsT) {
-    const lines = args.lines;
-    const title = args.title;
-    const tabs = args.tabs;
-    const selectedTab = args.selectedTab;
-    const onClear = args.onClear;
-    const height = args.height;
-	// function onClick (){
-	//     return (stealFocus ? inputRef.current?.focus() : null)
-	// }
-	// function effectOne() {
-	//     if (!terminalContentRef.current) {
-	//         return
-	//     }
-	//     return terminalContentRef.current.scrollTop = terminalContentRef.current.scrollHeight
-	// }
-
-	function effectHistory() {
-            setHistorySelectIndex(-1)
-	}
-	const inputRef = useRef<HTMLInputElement>(null);
-				   const terminalContentRef = useRef<HTMLDivElement>(null);
-									const [activeInputValue, setActiveInputValue] = useState<string>("");
-																    const [historySelectIndex, setHistorySelectIndex] = useState<number>(-1);
-																								    //    useEffect(effectOne, [lines]);
-																								    useEffect(effectHistory, [lines]);
-																								    return (
-																								    <Container >
-																									{
-                //onClick=onClick
-                (title || tabs) && (
-                    <Header>
-                        <Title>{title}</Title>
-                        {tabs && (
-                            <Tabs>
-                                {tabs.map((tab:string) => (
-                                    <Tab
-                                        className={tab === selectedTab ? "selected" : ""}
-                                        onClick={(e) => {
-                                            //onChangeTab(tab)
-                                            e.stopPropagation()
-                                            e.preventDefault()
-                                        }}
-                                        key={tab}
-                                    >
-                                        {tab}
-                                    </Tab>
-                                ))}
-                                {onClear && <Tab onClick={onClear}>Clear</Tab>}
-                            </Tabs>
-                        )}
-                    </Header>
-                )}
-            <TerminalContent height={height} ref={terminalContentRef}>
-                {lines.map((line:LineT, i:number) =>
-                    line.type === "input" ? (
-                        <InputLine key={i}>
-                            <InputCarat>{">"}</InputCarat>
-                            {line.value}
-                        </InputLine>
-                    ) : line.type === "output" ? (
-                        <Output key={i}>{line.value}</Output>
-                    ) : (
-                        <Error key={i}>{line.value.toString()}</Error>
-                    )
-                )}
-                <ActiveInputLine>
-                    <InputCarat>{">"}</InputCarat>
-                    <TextInput
-                        onKeyUp={(e) => {
-                            if (e.key === "Enter") {
-                                //onSubmit(activeInputValue)
-                                setActiveInputValue("")
-                            } else if (e.key === "ArrowUp") {
-                                const newHSI = historySelectIndex + 1
-                                const inputs = lines.filter((l) => l.type === "input")
-                                inputs.reverse()
-                                if (newHSI < inputs.length) {
-                                    setActiveInputValue(inputs[newHSI].value)
-                                    setHistorySelectIndex(newHSI)
-                                }
-                            } else if (e.key === "ArrowDown") {
-                                const newHSI = historySelectIndex - 1
-                                const inputs = lines.filter((l) => l.type === "input")
-                                inputs.reverse()
-                                if (newHSI >= 0) {
-                                    setActiveInputValue(inputs[newHSI].value)
-                                    setHistorySelectIndex(newHSI)
-                                }
-                            }
-                        }}
-                        onChange={(e) => setActiveInputValue(e.target.value)}
-                        value={activeInputValue}
-                        ref={inputRef}
-                    />
-                </ActiveInputLine>
-            </TerminalContent>
-        </Container>
-    )
-																								    };
-
-																								    //export default ReactReplView;
+export default ReactRepl
