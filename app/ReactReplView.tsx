@@ -86,7 +86,7 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
   const tabs = args.tabs;  const selectedTab = args.selectedTab;  const onClear = args.onClear;
   const height = Number(args.height);
   const onChangeTab = args.onChangeTab;
-  //const onSubmit = args.onSubmit
+  const onSubmit = args.onSubmit
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalContentRef = useRef<HTMLDivElement>(null);
   const [activeInputValue, setActiveInputValue] = useState<string>("");
@@ -108,6 +108,7 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
 	      <Tab
 		className={tab === selectedTab  ? "selected"   : ""}
 		onClick={(e) => {
+		  //console.log("click");
 		  if (onChangeTab) {
 		    onChangeTab(tab)
 		  }
@@ -142,8 +143,12 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
 	<ActiveInputLine>
 	<InputCarat>{">"}</InputCarat>
 	  <TextInput   onKeyUp={(e) => {
+	    //      console.log("key up");
 	    if (e.key === "Enter") {
-	      //onSubmit(activeInputValue)
+	      ///        console.log("keyup enter");
+        if (onSubmit) {
+	        onSubmit(activeInputValue)
+        }
 	      setActiveInputValue("");
 	    } else if (e.key === "ArrowUp") {
 	      const newHSI = historySelectIndex + 1;

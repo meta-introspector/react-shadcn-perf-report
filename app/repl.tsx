@@ -7,7 +7,11 @@ import type {  EvalCodeFunction } from "./types"
 import { ReactRepl } from "./ReactReplView"
 function actionOnChangeTab (){}
 function actionOnSubmit (): Promise<void>{
-  return new Promise(resolve => resolve());
+  console.log("submit");
+  return new Promise(resolve => {
+    console.log("resolve");
+    resolve()
+  });
 }
 function actionOnClear (){}
 //function submitCodeRef1 (){}
@@ -39,7 +43,10 @@ const GeneralPurposeReplUI = () => {
         ]} onChangeTab={function (tab: string): void {
           throw new Error("Function not implemented.");
         } } onSubmit={function (input: string): void {
-          throw new Error("Function not implemented.");
+          //throw new Error("Function not implemented.");
+	  console.log("input", input, eval(input));
+	  lines.append({type:"input",value: input});
+	  
         } }    /></div>
   )
 }
