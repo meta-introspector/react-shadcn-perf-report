@@ -84,3 +84,11 @@ Checkers that are compatible with this mode, but will not run until properly con
 Flycheck Mode is enabled.  Use C-u C-c ! x to enable disabled
 
 ```
+# graphql 
+
+Added graphql
+```
+npm install graphql graphql-scalars type-graphql
+npm install reflect-metadata
+npm install core-js
+```

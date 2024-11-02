@@ -5,7 +5,6 @@ import React, { useState, useEffect, FC } from "react";
 import { useReactReplJS } from "./useReactReplJS"
 import { ReactRepl    } from "./ReactReplView";
 import { Scope, LineT, LinesT, FCReactReplPropsT, ReactReplPropsT    } from "./types";
-
 import prettyFormat from "pretty-format"
 
 const AsyncFunction: FunctionConstructor = Object.getPrototypeOf(async function () {}).constructor

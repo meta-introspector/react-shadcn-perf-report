@@ -15,83 +15,86 @@ import {
 } from "@/components/ui/select";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-type TestCase = 'test1' | 'test2';
+import type { Profile,TestRun,FunctionData,Stats,TestCase,TestMetrics } from "./types";
 
-type Stats = {
-  total: number;
-  count: number;
-  // min: number;
-  // max: number;
-};
-
-interface VersionMetrics {
-  [key:string]: Stats
+function loadProfiles():Profile[]
+{
+  const ret:Profile[]=[];
+  return ret;
 }
 
-interface TestMetrics {
-  [key: string]: VersionMetrics;
+function foo1() {
+  const sampleData: Profile[] = loadProfiles();
+                  sampleData.map((func, i) => {
+                  func.testRun.map((value:TestRun,index: number, array:TestRun[]): void => {
+                    value.metrics.map((function1:FunctionData,index2:number, array:FunctionData[]) => {
+                      
+                    });
+                  });
+                  //const stats = getPerformanceStats(func);
+		  });
 }
 
-interface FunctionData {
-  functionName: string;
-  metrics: TestMetrics;
+function tbody(i:number,functionName:string, stats:Stats) {
+                {
+                  return (
+                    <tr key={i}>
+                      <td className="p-4 border-b">{functionName.split('::').pop()}</td>
+			<td className="p-4 border-b text-green-600">
+
+                        {stats.min.toLocaleString()}
+                      </td>
+                      <td className="p-4 border-b text-red-600">
+                        {stats.max.toLocaleString()}
+                      </td>
+                      <td className="p-4 border-b">
+                        {Math.round(stats.avg).toLocaleString()}
+                      </td>
+                      <td className="p-4 border-b">{stats.variance}%</td>
+                    </tr>
+                  );
+                }
 }
 
-interface PerformanceStats {
-  min: number;
-  max: number;
-  avg: number;
-  variance: string;
-}
-
+// now a component
+// FIXME: remove all data,leave only the structure
 const PerformanceAnalyzer = () => {
-  const [selectedTest, setSelectedTest] = useState<TestCase>('test1');
+  const [selectedTest, setSelectedTest] = useState<TestCase>({name: 'test1', file:"todo"});
   
   // Sample data structure
-  const sampleData: FunctionData[] = [
-    {
-      functionName: "ark_ff::fields::models::fp::montgomery_backend::MontBackend",
-      metrics: {
-        test1: { v1: { total:1000, count:3},
-          v2: { total:1000, count:3} }
-      }
-    },
-    {
-      functionName: "ark_ff::fields::models::fp::standard_backend::StdBackend",
-      metrics: {
-        test1: { v1: { total:1000, count:3},
-	       },
-        test2: { v1: { total:1000, count:3} }
-      }
-    }
-  ];
-
+  const sampleData: Profile[] = loadProfiles();
   const processedData = useMemo(() => {
     return sampleData.map(func => ({
-      name: func.functionName.split('::').pop(),
-      vm: func.metrics[selectedTest],
+      //name: func.functionName.split('::').pop(),
+      //vm: func.metrics[selectedTest.name],
       //      v2: func.metrics[selectedTest].v2,
       //v3: func.metrics[selectedTest].v3
     }));
   }, [selectedTest, sampleData]);
 
-  const getPerformanceStats = (metrics: TestMetrics): PerformanceStats => {
+  function findTest(name:string):TestCase {
+   const test: TestCase = { name:"test", file:"test" };
+    return test;
+  }
+  function getPerformanceStats(metrics: TestMetrics): Stats {
     const allValues = Object.values(metrics)
       .flatMap(test => Object.values(test))
       .flatMap(test2 => test2.count);
+      const total = 0;
+      const count = 0;
     const min = Math.min(...allValues);
     const max = Math.max(...allValues);
     const avg = allValues.reduce((a, b) => a + b, 0) / allValues.length;
-    const variance = ((max - min) / min * 100).toFixed(1);
-    return { min, max, avg, variance };
-  };
+    const variance = Number(((max - min) / min * 100).toFixed(1));
+    return { total, count, min, max, avg, variance };
+  }
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Performance Analysis Dashboard</h1>
       
       <div className="mb-6">
-        <Select value={selectedTest} onValueChange={(value: TestCase) => setSelectedTest(value)}>
+        <Select value={selectedTest.name} onValueChange={(value: string) => setSelectedTest(findTest(value))}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Select test case" />
           </SelectTrigger>
@@ -154,10 +157,8 @@ const PerformanceAnalyzer = () => {
         <CardContent>
 
       <h1>debug</h1>
-	<div><pre>DEBUG1{JSON.stringify(
-	  [... new Set(
-	  sampleData.flatMap(func => Object.values(func.metrics)).flatMap(a => Object.keys(a) )
-	  )]
+	<div><pre>DEBUG1{JSON.stringify([]
+	 // [... new Set(	  sampleData.flatMap(func => Object.values(func.metrics)).flatMap(a => Object.keys(a) )	  )]
 	  , null, 2) }</pre></div>;
         </CardContent>
       </Card>
@@ -179,25 +180,6 @@ const PerformanceAnalyzer = () => {
                 </tr>
               </thead>
               <tbody>
-                {sampleData.map((func, i) => {
-                  const stats = getPerformanceStats(func.metrics);
-                  return (
-                    <tr key={i}>
-                      <td className="p-4 border-b">{func.functionName.split('::').pop()}</td>
-			<td className="p-4 border-b text-green-600">
-
-                        {stats.min.toLocaleString()}
-                      </td>
-                      <td className="p-4 border-b text-red-600">
-                        {stats.max.toLocaleString()}
-                      </td>
-                      <td className="p-4 border-b">
-                        {Math.round(stats.avg).toLocaleString()}
-                      </td>
-                      <td className="p-4 border-b">{stats.variance}%</td>
-                    </tr>
-                  );
-                })}
               </tbody>
             </table>
           </div>
