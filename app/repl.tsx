@@ -29,29 +29,41 @@ const GeneralPurposeReplUI = () => {
       // onSubmit={actionOnSubmit}
       // submitCodeRef={submitCodeRef}
   // onClear={actionOnClear}
+
+  // onChangeTab={function (tab: string): void {
+  //         //throw new Error("Function not implemented.");
+  // 	  console.log("change tag", tab);
+  // 	  submitCode('alert(`${tab}! This will appear in the REPL!`)');
+
+  //       } }
   return  (
-    <div>DEBUG { JSON.stringify( actionOnSubmit ) } test { JSON.stringify( submitCodeRef )} test2
+    <div>
     <ReactRepl
         title={`test Repl!`}
-        tabs={["Javascript"]}
-        selectedTab="Javascript"     height={200}
-        lines={[
-          { type: "input", value: "obj = { something: 2 }" },
-          { type: "output", value: '{ "something": 2 }' },
-          { type: "input", value: "b" },
-          { type: "error", value: "TypeError: b is not defined" },
-        ]} onChangeTab={function (tab: string): void {
-          //throw new Error("Function not implemented.");
-	  console.log("change tag", tab);
-	  submitCode('alert(`${tab}! This will appear in the REPL!`)');
+      height={600}
 
-        } } onSubmit={function (input: string): void {
-          //throw new Error("Function not implemented.");
-	  console.log("input", input, eval(input));
-	  submitCode('alert(`${input}! This will appear in the REPL!`)');
-	  //FIXME: lines.append({type:"input",value: input});
+      // TODO:
+      // add copy
+      // split into chunks
+      // send to port
+      // connect port between browser windows
+      // send to another app or chat window on android.
+      // send to llm
+      //lines={[
+      //          { type: "input", value: "obj = { something: 2 }" },
+      //          { type: "output", value: '{ "something": 2 }' },
+      //          { type: "input", value: "b" },
+      //   { type: "error", value: "TypeError: b is not defined" },
+      //]}
+
+b      // onSubmit={function (input: string): void {
+      //     //throw new Error("Function not implemented.");
+      // 	  console.log("input", input, eval(input));
+      // 	  submitCode('alert(`${input}! This will appear in the REPL!`)');
+      // 	  //FIXME: lines.append({type:"input",value: input});
 	  
-        } }    /></div>
+      //   } }
+    /></div>
   )
 }
 export default GeneralPurposeReplUI;

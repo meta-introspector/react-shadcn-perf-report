@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { LineT, ReactReplPropsT } from "./types";
 
 const Container = styled.div`
+width: 1200px;
   font-family: monospace;
   font-weight: bold;
   color: #fff;
