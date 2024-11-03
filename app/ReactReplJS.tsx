@@ -45,11 +45,15 @@ export const ReactReplJS: FCReactReplPropsT = (args: ReactReplPropsT) => {
 
   const onSubmit = async (execLine: string) => {
     console.log("onsubmit",lines)
+    let newLines:LinesT=[];
+    const new_node = { type: "input", value: execLine };
+    const initial_list : LinesT =  [new_node];
     if (!lines) {
-      setLines([]);
+      newLines = initial_list;
     }
-
-    const newLines = lines.concat([{ type: "input", value: execLine }])
+    else {
+      newLines = lines.concat(initial_list);
+    }    
     setLines(newLines)
     if (!execLine.trim()) return
     setLines(newLines.concat([await execAndGetLine(execLine)]))
