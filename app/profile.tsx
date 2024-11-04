@@ -147,7 +147,16 @@ function PerformanceAnalyzer() {
 	<GitHostingSelector/>
 	<GitRepoSelector/>
 	<TestCaseSelector/>
-  <span>Module:</span>
+
+	<GenericListDefinitionSelector definition={{
+	  listName : "Module",
+	  title: 'Module',
+	  type: 'Module',    
+	  values: ["npm","os","rust","hw",
+	    "react","next","aws","https","archive.org",
+	    "wikimedia","huggingface", "ipfs", "aws-ssm-parameter", "etc"]
+	}} default='rust'></GenericListDefinitionSelector>
+
   <span>Function: Function</span>
 	<GenericListDefinitionSelector definition={calling_mode} default='caller'></GenericListDefinitionSelector>
 	<GenericListDefinitionSelector definition={{
@@ -259,14 +268,39 @@ function PerformanceAnalyzer() {
           </div>
         </CardContent>
       </Card>
-      <div>allocate (storage (disk/memory)/compute)
-	create (account/escrow/coins/secrets)
-  import data (github runs, local runs)/construct query/
-  save results/
-  profile process/
-  optimize process/
-  share results/
-  reuse results/export results</div>
+
+	<GenericListDefinitionSelector definition={{
+	  listName : "allocation_type",
+	  title: 'Allocation type',
+	  type: 'allocation',    
+	  values: ["Resources","Time","Space","Space-Storage","Space-Memory","Space-Cache","Space-Register","Space-Bit","Space-Float","Compute","Compute-Multiply"]
+	}} default='Compute'></GenericListDefinitionSelector>
+
+		<GenericListDefinitionSelector definition={{
+	  listName : "account_type",
+	  title: 'Account type',
+	  type: 'Account',    
+		  values: ["Bank","Telephone","Power","Bitcoin","Mina","bittensor","aws","google","github",
+		    "gitlab","sourceforce", "escrow"]
+	}} default='Mina'></GenericListDefinitionSelector>
+
+
+	<GenericListDefinitionSelector definition={{
+	  listName : "data_source",
+	  title: 'Data Source',
+	  type: 'Source',    
+	  values: ["Local","Browser","Node","Docker",
+	    "Github Action","Gitlab Runner","aws s3","https","archive.org",
+	    "wikimedia","huggingface", "ipfs", "aws ssm parameter"]
+	}} default='Local'></GenericListDefinitionSelector>
+
+      	<GenericListDefinitionSelector definition={{
+	  listName : "data_process",
+	  title: 'Data Process',
+	  type: 'Operation',    
+	  values: ["Import","Export","Share","Search","Sort","Visualize","Query","Optimize","Save","Profile","Verify"]
+	}} default='Import'></GenericListDefinitionSelector>
+
       <Card>
         <CardHeader>
           <CardTitle>Performance Statistics</CardTitle>
