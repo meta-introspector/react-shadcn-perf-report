@@ -206,6 +206,13 @@ function PerformanceAnalyzer() {
 	  values: ["Beginning","Middle","End"]
 	}} default='Middle'></GenericListDefinitionSelector>
 
+		<GenericListDefinitionSelector definition={{
+	  listName : "language_type",
+	  title: 'Language type',
+	  type: 'language type',    
+	  values: [  "lisp",	    "prolog",	    "rust",	    "ocaml",	    "typescript","javascript"]
+		}} default="typescript"></GenericListDefinitionSelector>
+      
 	<GenericListDefinitionSelector definition={{
 	  listName : "math_type",
 	  title: 'Math type',
@@ -219,20 +226,23 @@ function PerformanceAnalyzer() {
 	    "platonic solids",
 	    "euclidian geometry",
 	    "dupont's meta-meme introspector chronicles",// this is my project
-	    "cartesian projection",
-	    "cantor diagonalization",
-	    "goedels numbering",
-	    "peano sequencing",
-	    "russels PM",
-	    "freges begriffschrift",
+	    "decart' cartesian projection",
+	    "cantor's diagonalization",
+	    "goedel's numbering",
+	    "peano's sequencing",
+	    "russel's PM",
+	    "frege's begriffschrift",
 	    "elliptic curves",
-	    "group theory-fields",
+	    "abel's group theory-fields",
+	    "knuth's searching and sorting",
+	    "category theory",	    
 	    "topology",
 	    "density functions-probability",
 	    "sine waves-trigonometry",
 	    "comp sci -searching/sorting",
 	    "algebra- linear",
 	    "algebra- topology",
+	    "haskell's curry",
 	  ]
 	}}
 	  default="univalent foundations"></GenericListDefinitionSelector>
