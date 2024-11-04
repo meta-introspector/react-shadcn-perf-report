@@ -225,7 +225,8 @@ function PerformanceAnalyzer() {
 	    "algebra- linear",
 	    "algebra- topology",
 	  ]
-	}} default='elliptic curves'></GenericListDefinitionSelector>
+	}}
+	  default="univalent foundations"></GenericListDefinitionSelector>
 
 	
       </div>
