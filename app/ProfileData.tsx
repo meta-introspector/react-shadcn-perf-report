@@ -10,10 +10,11 @@ export //@ObjectType()
   // y
   versions!: Version[];
   testRuns!: TestRun[];
+    //  hosting: any;
   }
 
 export function findTestCase(prof:Profile, name: string) {
   console.log(name);
-  return prof.testCases[0];
+  return prof.testCases.find(item=>item.name === name);
 }
 

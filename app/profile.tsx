@@ -15,13 +15,16 @@ import {
 } from "@/components/ui/select";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-import { Profile , findTestCase} from "./ProfileData";
+import { Profile } from "./ProfileData";
 import { TestRun } from "./TestRun";
 import { FunctionData } from "./FunctionData";
 import { TestMetrics } from "./TestMetrics";
 import { Stats } from "./Stats";
 import { Version } from "./Version";
 import { TestCase } from "./TestCase";
+import { TestCaseSelector } from "./TestCaseSelector";
+import { GitHostingSelector } from "./HostingSelector";
+import { GitRepoSelector } from "./GitRepoSelector";
 
 interface ReportSelectorProps {
   testCases: TestCase[];
@@ -86,9 +89,9 @@ class ProfileProps {}
 class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   state: ProfileState = {
     // Initialize state as needed
-    testCases: [{name:"t1",file:"t1"}],
+    testCases: [{ name: "t1", file: "t1" }],
     versions: [],
-    testRuns: []    
+    testRuns: []
   };
 
   prepareReport = () => {
@@ -107,16 +110,13 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
 }
 
 
-function listTestCase(tc:TestCase) :ReactNode {
-  return <SelectItem key="{tc.name}" value="{tc.name}">{tc.name}</SelectItem>
-}
-
 function PerformanceAnalyzer() {
   const [getProfile, setProfile] = useState<Profile>({
     versions:[],
     testRuns:[],
     testCases:[
-      {name:"1",file:"1"}
+      {name:"test 1",file:"1"},
+      {name:"tes2",file:"test"}
     ]
   });
   const [testCase,setTestCase] = useState<TestCase>();
@@ -127,14 +127,10 @@ function PerformanceAnalyzer() {
       <h1 className="text-3xl font-bold mb-6">Performance Analysis Dashboard</h1>
 
       <div className="mb-6">
-        <Select value={testCase?.name} onValueChange={(value: string) => setTestCase(findTestCase(getProfile,value))}>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="Select test case" />
-          </SelectTrigger>
-          <SelectContent> {
-            getProfile?.testCases?.map(listTestCase)
-          } </SelectContent>
-        </Select>
+	<GitHostingSelector/>
+	<GitRepoSelector/>
+	<TestCaseSelector/>
+	
       </div>
 
       <Card className="mb-6">

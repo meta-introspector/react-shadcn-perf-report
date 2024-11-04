@@ -19,11 +19,11 @@ function scopeEval(scope: Scope, script: string): Promise<Scope> {
 }
 
 async function execAndGetLine(execLine: string): Promise<LineT> {
-  console.log("execAndGetLine", execLine);
+  //console.log("execAndGetLine", execLine);
    if (!execLine.trim()) return { type: "error", value: "Empty"}
    try {
      const evalOutput = await scopeEval(window, execLine)
-     console.log("evalOutput", evalOutput);
+     //console.log("evalOutput", evalOutput);
      return { type: "output", value: prettyFormat(evalOutput) }
    } catch (e) {
        return { type: "error", value: JSON.stringify(e) }
@@ -31,7 +31,7 @@ async function execAndGetLine(execLine: string): Promise<LineT> {
  }
 
 export const ReactReplJS: FCReactReplPropsT = (args: ReactReplPropsT) => {
-  console.log("repl",args)
+  //console.log("repl",args)
   const title=args.title
   const tabs=args.tabs
   const selectedTab=args.selectedTab
@@ -44,7 +44,7 @@ export const ReactReplJS: FCReactReplPropsT = (args: ReactReplPropsT) => {
   const [lines, setLines] = useState<LinesT|undefined>(initialLines)
 
   const onSubmit = async (execLine: string) => {
-    console.log("onsubmit",lines)
+    //    console.log("onsubmit",lines)
     let newLines:LinesT=[];
     const new_node : LineT = { type: 'input', value: execLine };
     const initial_list : LinesT =  [new_node];
