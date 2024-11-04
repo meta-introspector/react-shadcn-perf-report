@@ -34,7 +34,7 @@ export function GitRepoSelector() {
 );
   const [repo,setGitRepo] = useState<GitRepository>();
   return (
-    <div>Git Repo:
+    <span>Git Repo:
         <Select value={repo?.name} onValueChange={(value: string) => setGitRepo(findGitRepo(value))}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Select Git Repo" />
@@ -42,6 +42,6 @@ export function GitRepoSelector() {
           <SelectContent> {
             gitHosting?.repos?.map(listRepo)
           } </SelectContent>
-        </Select></div>
+        </Select></span>
   )
 }

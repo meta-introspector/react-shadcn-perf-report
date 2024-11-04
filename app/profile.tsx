@@ -25,6 +25,8 @@ import { TestCase } from "./TestCase";
 import { TestCaseSelector } from "./TestCaseSelector";
 import { GitHostingSelector } from "./HostingSelector";
 import { GitRepoSelector } from "./GitRepoSelector";
+import {GenericListDefinitionSelector} from "./ListSelector";
+import {GenericListDefinition} from "./GenericListDefinition";
 
 interface ReportSelectorProps {
   testCases: TestCase[];
@@ -88,6 +90,7 @@ class ProfileProps {}
 
 class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   state: ProfileState = {
+    functions: [],
     // Initialize state as needed
     testCases: [{ name: "t1", file: "t1" }],
     versions: [],
@@ -113,6 +116,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
 function PerformanceAnalyzer() {
   const [getProfile, setProfile] = useState<Profile>({
     versions:[],
+    functions: [],
     testRuns:[],
     testCases:[
       {name:"test 1",file:"1"},
@@ -121,15 +125,108 @@ function PerformanceAnalyzer() {
   });
   const [testCase,setTestCase] = useState<TestCase>();
   console.log(getProfile);
-  console.log(getProfile?.testCases)
+  console.log(getProfile?.testCases);
+  const calling_mode : GenericListDefinition = {
+    listName : "calling_mode",
+    title: 'Calling Mode',
+    type: 'type unknown',    
+    values: ["caller","callee"]
+  };
+
+  const consuming_mode : GenericListDefinition = {
+    listName : "consuming_mode",
+    title: 'Consuming Mode',
+    type: 'type unknown',    
+    values: ["creating","consuming"]
+  };
+
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Performance Analysis Dashboard</h1>
-
       <div className="mb-6">
 	<GitHostingSelector/>
 	<GitRepoSelector/>
 	<TestCaseSelector/>
+  <span>Module:</span>
+  <span>Function: Function</span>
+	<GenericListDefinitionSelector definition={calling_mode} default='caller'></GenericListDefinitionSelector>
+	<GenericListDefinitionSelector definition={{
+    listName : "consuming_mode",
+    title: 'Consuming Mode',
+    type: 'type unknown',    
+    values: ["creating","consuming"]
+  }} default='creating'></GenericListDefinitionSelector>
+
+	<GenericListDefinitionSelector definition={{
+	  listName : "Layer",
+	  title: 'Layer',
+	  type: 'type unknown',    
+	  values: ["Hardware","OS","NodeJS","Application/Wasm/Rust","Application/Wasm/Ocaml","Networking","Application"]
+	}} default='Application'></GenericListDefinitionSelector>
+
+	<GenericListDefinitionSelector definition={{
+	  listName : "category",
+	  title: 'Category',
+	  type: 'type unknown',    
+	  values: ["Network","HTML","Crypto"]
+	}} default='Crypto'></GenericListDefinitionSelector>
+
+	<GenericListDefinitionSelector definition={{
+	  listName : "count_type",
+	  title: 'Count type',
+	  type: 'type unknown',    
+	  values: ["Self Only","With Children"]
+	}} default='With Children'></GenericListDefinitionSelector>
+
+	<GenericListDefinitionSelector definition={{
+	  listName : "size_type",
+	  title: 'Size type',
+	  type: 'type unknown',    
+	  values: ["Big","Small"]
+	}} default='Big'></GenericListDefinitionSelector>
+	<GenericListDefinitionSelector definition={{
+	  listName : "speed_type",
+	  title: 'Speed type',
+	  type: 'type unknown',    
+	  values: ["Fast","Slow"]
+	}} default='Slow'></GenericListDefinitionSelector>
+	<GenericListDefinitionSelector definition={{
+	  listName : "time_phase_type",
+	  title: 'Phase type',
+	  type: 'type unknown',    
+	  values: ["Beginning","Middle","End"]
+	}} default='Middle'></GenericListDefinitionSelector>
+
+	<GenericListDefinitionSelector definition={{
+	  listName : "math_type",
+	  title: 'Math type',
+	  type: 'math type',    
+	  values: [
+	    "univalent foundations",
+	    "homotopy",
+	    "algebra",
+	    "lattice",
+	    "geometry",
+	    "platonic solids",
+	    "euclidian geometry",
+	    "dupont's meta-meme introspector chronicals",// this is my project
+	    "cartesian projection",
+	    "cantor diagonalization",
+	    "goedels numbering",
+	    "peano sequencing",
+	    "russels PM",
+	    "freges begriffschrift",
+	    "elliptic curves",
+	    "group theory-fields",
+	    "topology",
+	    "density functions-probability",
+	    "sine waves-trigonometry",
+	    "comp sci -searching/sorting",
+	    "algebra- linear",
+	    "algebra- topology",
+	  ]
+	}} default='elliptic curves'></GenericListDefinitionSelector>
+
 	
       </div>
 
@@ -161,7 +258,14 @@ function PerformanceAnalyzer() {
           </div>
         </CardContent>
       </Card>
-
+      <div>allocate (storage (disk/memory)/compute)
+	create (account/escrow/coins/secrets)
+  import data (github runs, local runs)/construct query/
+  save results/
+  profile process/
+  optimize process/
+  share results/
+  reuse results/export results</div>
       <Card>
         <CardHeader>
           <CardTitle>Performance Statistics</CardTitle>

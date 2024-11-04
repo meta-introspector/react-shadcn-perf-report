@@ -9,40 +9,38 @@ import {
 } from "@/components/ui/select";
 
 import { Profile } from "./ProfileData";
-import { TestCase } from "./TestCase";
+import { FunctionDefinition } from "./Function";
 
-export function TestCaseSelector() {
+export function FunctionSelector() {
 
-  function listTestCase(tc:TestCase) :ReactNode {  
+  function listFunction(tc:FunctionDefinition) :ReactNode {  
     let ret= <SelectItem key={tc.name} value={tc.name}>{tc.name}</SelectItem>
     //console.log(ret);
     return ret
   }
 
-  function findTestCase(prof:Profile, name: string) {
+  function findFunction(prof:Profile, name: string) {
     console.log(name);
     return prof.testCases.find(item=>item.name === name);
   }
   
   const [getProfile, setProfile] = useState<Profile>({
     versions:[],
-    testRuns:[],
-   functions:[],
-    testCases:[
-      {name:"test 1",file:"1"},
-      {name:"tes2",file:"test"},
-      {name:"test3",file:"test2"}
+    testRuns:[],   
+    testCases:[],
+    functions: [
+      {name:"test 1"},
     ]
   });
-  const [testCase,setTestCase] = useState<TestCase>();
+  const [testCase,setFunction] = useState<FunctionDefinition>();
   return (
-    <span>TestCase:
-        <Select value={testCase?.name} onValueChange={(value: string) => setTestCase(findTestCase(getProfile,value))}>
+    <span>Function:
+        <Select value={testCase?.name} onValueChange={(value: string) => setFunction(findFunction(getProfile,value))}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Select test case" />
           </SelectTrigger>
           <SelectContent> {
-            getProfile?.testCases?.map(listTestCase)
+            getProfile?.testCases?.map(listFunction)
           } </SelectContent>
         </Select></span>
   )

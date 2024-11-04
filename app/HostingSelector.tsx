@@ -36,7 +36,7 @@ export function GitHostingSelector() {
 );
   const [hosting,setGitHosting] = useState<GitHosting>();
   return (
-    <div>Hosting:
+    <span>Hosting:
         <Select value={hosting?.name} onValueChange={(value: string) => setGitHosting(findGitHosting(value))}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Select Git Hosting" />
@@ -45,6 +45,6 @@ export function GitHostingSelector() {
             accounts?.gitHostings?.map(listHosting)
           } </SelectContent>
         </Select>
-    </div>
+    </span>
   )
 }
