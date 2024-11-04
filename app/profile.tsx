@@ -209,7 +209,7 @@ function PerformanceAnalyzer() {
 	    "geometry",
 	    "platonic solids",
 	    "euclidian geometry",
-	    "dupont's meta-meme introspector chronicals",// this is my project
+	    "dupont's meta-meme introspector chronicles",// this is my project
 	    "cartesian projection",
 	    "cantor diagonalization",
 	    "goedels numbering",
