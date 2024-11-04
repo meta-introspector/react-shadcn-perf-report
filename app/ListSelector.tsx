@@ -36,7 +36,7 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
   return (
     <span>{props.definition?.title}:
       <Select value={genericSelection}
-	onValueChange={(value: string) => { console.log(value); return setGenericSelection(value)}}>
+	onValueChange={(value: string) => { console.log(value); if (props.definition.target) {props.definition.target(value);};return setGenericSelection(value)}}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Select {datatype.name}" />
           </SelectTrigger>

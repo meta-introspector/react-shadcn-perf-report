@@ -6,4 +6,5 @@ export class GenericListDefinition {
   title!: string; // title of list
   type!: string; // name of type of data of list
   values!: GenericElement [] // value of the type
+  target?: any|undefined // function pointer
 }

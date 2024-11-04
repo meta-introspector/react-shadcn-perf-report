@@ -123,6 +123,7 @@ function PerformanceAnalyzer() {
       {name:"tes2",file:"test"}
     ]
   });
+  const [CallingMode, setCallingMode] = useState<string>();
   const [testCase,setTestCase] = useState<TestCase>();
   console.log(getProfile);
   console.log(getProfile?.testCases);
@@ -130,7 +131,8 @@ function PerformanceAnalyzer() {
     listName : "calling_mode",
     title: 'Calling Mode',
     type: 'type unknown',    
-    values: ["caller","callee"]
+    values: ["caller","callee"],
+    target: setCallingMode,
   };
 
   const consuming_mode : GenericListDefinition = {
@@ -250,6 +252,7 @@ function PerformanceAnalyzer() {
 	
       </div>
 
+      <div>selected { CallingMode } </div>
       <Card className="mb-6">
         <CardHeader>
           <CardTitle>Performance Trends</CardTitle>
@@ -316,6 +319,7 @@ function PerformanceAnalyzer() {
           <CardTitle>Performance Statistics</CardTitle>
         </CardHeader>
         <CardContent>
+	  <div>{}</div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
