@@ -46,7 +46,7 @@ export const ReactReplJS: FCReactReplPropsT = (args: ReactReplPropsT) => {
   const onSubmit = async (execLine: string) => {
     console.log("onsubmit",lines)
     let newLines:LinesT=[];
-    const new_node = { type: "input", value: execLine };
+    const new_node : LineT = { type: 'input', value: execLine };
     const initial_list : LinesT =  [new_node];
     if (!lines) {
       newLines = initial_list;
@@ -79,7 +79,6 @@ export const ReactReplJS: FCReactReplPropsT = (args: ReactReplPropsT) => {
   }, [])
 
   return (
-  <div>
     <ReactRepl
       title={title}
       tabs={tabs || ["Javascript"]}
@@ -90,7 +89,6 @@ export const ReactReplJS: FCReactReplPropsT = (args: ReactReplPropsT) => {
       lines={lines}
       onClear={() => setLines([])}
     />
-    </div>
   )
 }
 

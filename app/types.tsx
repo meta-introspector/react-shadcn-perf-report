@@ -1,6 +1,9 @@
 import "core-js/features/reflect";
 
-@ObjectType()
+//import { Field, Int, ObjectType } from "type-graphql";
+import { FC, ReactNode } from "react";
+
+//@ObjectType()
 export class Scope {
     name!: string;    
 };
@@ -11,7 +14,7 @@ export type LinesT = LineT[];
 
 export type EvalCodeFunction = (code: string) => Promise<void>;
 
-@ObjectType()
+//@ObjectType()
 export class ReactReplPropsT {
   title?: string;
   stealFocus?: boolean;
@@ -21,42 +24,37 @@ export class ReactReplPropsT {
   onClear?: () => void;
   onSubmit?: (input: string) => void;
   submitCodeRef?: React.MutableRefObject<EvalCodeFunction|undefined|null>;
-  @Field()
+  //@Field()
   lines?: LinesT|undefined;
-  @Field()
+  //@Field()
   initialLines?: LinesT | (() => LinesT);
-  @Field()
+  //@Field()
   initiallyExecute?: string[];
   
   height?: number;
 };
 
-@ObjectType()
+//@ObjectType()
 export class LineT {
     type: 'input' | 'output' | 'error' = "input";
     value!: string;
 }
 
-import "core-js/features/reflect";
-import { Field, Int, ObjectType } from "type-graphql";
-import { FC } from "react";
-import test from 'node:test';
-
-export @ObjectType()
+export //@ObjectType()
 class TestCase {
-  @Field()
+  //@Field()
   name!:string;
 
-  @Field()
+  //@Field()
   file!:string;
 }
 
-@ObjectType()
+//@ObjectType()
 class Function {
-  @Field()
+  //@Field()
   url!:string;
 
-  @Field()
+  //@Field()
   hash!:string;
 
   // versions
@@ -69,34 +67,34 @@ class Function {
   // instruction
 }
 
-@ObjectType()
+export //@ObjectType()
 class Version {
-  @Field()
+  //@Field()
   hash!: string;
-  @Field()
+  //@Field()
   name!: string;
-  @Field()
+  //@Field()
   url!: string;
   // from url owner,repo,host, etc
 }
 
-@ObjectType()
+//@ObjectType()
 export class Stats {
-  @Field()
+  //@Field()
   total!: number;
-  @Field()
+  //@Field()
   count!: number;
 
-  @Field()
+  //@Field()
   min!: number;
   
-  @Field()
+  //@Field()
   max!: number;
   
-  @Field()
+  //@Field()
   avg!: number;
   
-  @Field()
+  //@Field()
   variance!: number;
 }
 
@@ -109,32 +107,33 @@ export class TestMetrics {
   [testName: string]: VersionMetrics;
 }
 
-export @ObjectType()
+export //@ObjectType()
 class FunctionData {
   // for each function
   [functionName: string] : TestMetrics;
 }
 
-export @ObjectType()
+export //@ObjectType()
 class TestRun {
-  @Field()
+  //@Field()
   hash!: string;
 
-  @Field()
+  //@Field()
   id!: string;  
 
   // each test run has test cases collected
-  @Field()
+  //@Field()
   metrics!: FunctionData[];
   
   // logs
   
-  @Field()
+  //@Field()
   url!: string;
   // from url owner,repo,host,action/workflow etc
 }
 
-export @ObjectType()
+
+export //@ObjectType()
 class Profile {
   // x
   testCases!: TestCase[];
@@ -142,8 +141,18 @@ class Profile {
   versions!: Version[];
   testRun!: TestRun[];
 
-  // reports
+  findTestCase(name:string){
+    return this.testCases[0]
+  }
 }
 
 export type FCReactReplPropsT = FC<ReactReplPropsT>;
+
+
+// function ObjectType(): (target: any) => void | any {
+//   throw new Error("Function not implemented.");
+// }
+// function Field(): (target: any, propertyKey: any) => void {
+//   throw new Error("Function not implemented.");
+// }
 

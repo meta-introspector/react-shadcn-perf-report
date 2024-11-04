@@ -1,5 +1,5 @@
 "use client"; // This is a client component
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, ReactNode } from 'react';
 import {
   Card,
   CardContent,
@@ -15,93 +15,115 @@ import {
 } from "@/components/ui/select";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-import type { Profile,TestRun,FunctionData,Stats,TestCase,TestMetrics } from "./types";
+import { Profile, Version, TestRun,FunctionData,Stats,TestCase,TestMetrics } from "./types";
 
-function loadProfiles():Profile[]
-{
-  const ret:Profile[]=[];
-  return ret;
+interface ReportSelectorProps {
+  testCases: TestCase[];
+  versions: Version[];
+  testRun: TestRun[];
 }
 
-function foo1() {
-  const sampleData: Profile[] = loadProfiles();
-                  sampleData.map((func, i) => {
-                  func.testRun.map((value:TestRun,index: number, array:TestRun[]): void => {
-                    value.metrics.map((function1:FunctionData,index2:number, array:FunctionData[]) => {
-                      
-                    });
-                  });
-                  //const stats = getPerformanceStats(func);
-		  });
+interface ReportSelectorState {
+  selectedTestCase: TestCase | null;
 }
 
-function tbody(i:number,functionName:string, stats:Stats) {
-                {
-                  return (
-                    <tr key={i}>
-                      <td className="p-4 border-b">{functionName.split('::').pop()}</td>
-			<td className="p-4 border-b text-green-600">
+class ReportSelector extends React.Component<ReportSelectorProps, ReportSelectorState> {
+  state: ReportSelectorState = {
+    selectedTestCase: null,
+  };
 
-                        {stats.min.toLocaleString()}
-                      </td>
-                      <td className="p-4 border-b text-red-600">
-                        {stats.max.toLocaleString()}
-                      </td>
-                      <td className="p-4 border-b">
-                        {Math.round(stats.avg).toLocaleString()}
-                      </td>
-                      <td className="p-4 border-b">{stats.variance}%</td>
-                    </tr>
-                  );
-                }
+  handleSelectTestCase = (testCase: TestCase) => {
+    this.setState({ selectedTestCase: testCase });
+  };
+
+  renderTests = () => {
+    return (
+      <div>
+        {this.props.testCases.map((testCase, index) => (
+          <div key={index}>
+            <button onClick={() => this.handleSelectTestCase(testCase)}>
+              {testCase.name}
+            </button>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  renderChart = () => {
+    // TO DO: implement chart rendering
+    return <div>Chart</div>;
+  };
+
+  renderReport = () => {
+    // TO DO: implement report rendering
+    return <div>Report</div>;
+  };
+
+  render() {
+    return (
+      <div>
+        <h2>Tests</h2>
+        {this.renderTests()}
+        <h2>Chart</h2>
+        {this.renderChart()}
+        <h2>Report</h2>
+        {this.renderReport()}
+      </div>
+    );
+  }
 }
 
-// now a component
-// FIXME: remove all data,leave only the structure
-const PerformanceAnalyzer = () => {
-  const [selectedTest, setSelectedTest] = useState<TestCase>({name: 'test1', file:"todo"});
+class ProfileState extends Profile {}
+class ProfileProps {}
+
+class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
+  state: ProfileState = {
+    // Initialize state as needed
+    testCases: [],
+    versions: [],
+    testRun: [],
+    findTestCase: function (name: string): TestCase {
+      return {name:"test",file:"test"}
+    }
+  };
+
+  prepareReport = () => {
+    const reportSelector = new ReportSelector({
+      testCases: this.state.testCases,
+      versions: this.state.versions,
+      testRun: this.state.testRun,
+    });
+    return reportSelector;
+  };
+
+  render() {
+    // TO DO: implement rendering
+    return <div>Profile</div>;
+  }
+}
+
+
+function listTestCase(tc:TestCase) :ReactNode {
+  return <SelectItem value="{tc.name}">{tc.name}</SelectItem>
+}
+
+function PerformanceAnalyzer() {
+  const [getProfile, setProfile] = useState<Profile>();
+  const [testCase,setTestCase] = useState<TestCase>();
   
-  // Sample data structure
-  const sampleData: Profile[] = loadProfiles();
-  const processedData = useMemo(() => {
-    return sampleData.map(func => ({
-      //name: func.functionName.split('::').pop(),
-      //vm: func.metrics[selectedTest.name],
-      //      v2: func.metrics[selectedTest].v2,
-      //v3: func.metrics[selectedTest].v3
-    }));
-  }, [selectedTest, sampleData]);
-
-  function findTest(name:string):TestCase {
-   const test: TestCase = { name:"test", file:"test" };
-    return test;
-  }
-  function getPerformanceStats(metrics: TestMetrics): Stats {
-    const allValues = Object.values(metrics)
-      .flatMap(test => Object.values(test))
-      .flatMap(test2 => test2.count);
-      const total = 0;
-      const count = 0;
-    const min = Math.min(...allValues);
-    const max = Math.max(...allValues);
-    const avg = allValues.reduce((a, b) => a + b, 0) / allValues.length;
-    const variance = Number(((max - min) / min * 100).toFixed(1));
-    return { total, count, min, max, avg, variance };
-  }
-
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Performance Analysis Dashboard</h1>
-      
+
       <div className="mb-6">
-        <Select value={selectedTest.name} onValueChange={(value: string) => setSelectedTest(findTest(value))}>
+        <Select value={testCase?.name} onValueChange={(value: string) => setTestCase(getProfile?.findTestCase(value))}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Select test case" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="test1">Test Case 1</SelectItem>
-            <SelectItem value="test2">Test Case 2</SelectItem>
-          </SelectContent>
+          <SelectContent> {
+            getProfile?.testCases?.map(listTestCase)
+          } </SelectContent>
         </Select>
       </div>
 
@@ -112,10 +134,11 @@ const PerformanceAnalyzer = () => {
         <CardContent>
           <div className="h-96 w-full">
 
-            <LineChart
-              width={1100}
-              height={400}
-              data={processedData}
+            {/* <LineChart
+              id="first_chart"
+              width={800}
+              height={350}
+              data={processedData?.chart()}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
@@ -123,43 +146,13 @@ const PerformanceAnalyzer = () => {
               <YAxis label={{ value: 'Ticks', angle: -90, position: 'insideLeft' }} />
               <Tooltip />
               <Legend />
-
-
-              <Line 
-                type="monotone" 
-                dataKey="v1" 
-                stroke="#8884d8" 
-                name="Version 1" 
-		  />
-		
-              <Line 
-                type="monotone" 
-                dataKey="v2" 
-                stroke="#82ca9d" 
-                name="Version 2" 
-              />
-              <Line 
-                type="monotone" 
-                dataKey="v3" 
-                stroke="#ffc658" 
-                name="Version 3" 
-              />
-            </LineChart>
+              <Line
+                type="monotone"
+                dataKey="v1"
+                stroke="#8884d8"
+                name="Version 1" />
+            </LineChart> */}
           </div>
-        </CardContent>
-      </Card>
-
-      
-            <Card>
-        <CardHeader>
-          <CardTitle>Performance Statistics</CardTitle>
-        </CardHeader>
-        <CardContent>
-
-      <h1>debug</h1>
-	<div><pre>DEBUG1{JSON.stringify([]
-	 // [... new Set(	  sampleData.flatMap(func => Object.values(func.metrics)).flatMap(a => Object.keys(a) )	  )]
-	  , null, 2) }</pre></div>;
         </CardContent>
       </Card>
 
@@ -187,6 +180,6 @@ const PerformanceAnalyzer = () => {
       </Card>
     </div>
   );
-};
+}
 
 export default PerformanceAnalyzer;
