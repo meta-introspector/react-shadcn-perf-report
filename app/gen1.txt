@@ -1,0 +1,354 @@
+import React, { createContext, useContext, useState, useMemo } from 'react';
+//import { FunctionData, ProcessedDataPoint, PerformanceStats } from '../types';
+//import { usePerformanceContext } from '../context/PerformanceContext';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+//import { PerformanceChart } from './PerformanceChart';
+//import { StatsTable } from './StatsTable';
+//import { PerformanceREPL } from './PerformanceREPL';
+//import { usePerformanceData } from '../hooks/usePerformanceData';
+//import { PerformanceContext } from '../context/PerformanceContext';
+//import { PerformanceDataProvider, PerformanceConfig } from '../types';
+//import { processData, getPerformanceStats } from '../utils';
+//import { PerformanceAnalyzer } from './components/PerformanceAnalyzer';
+
+// ```typescript
+// context/PerformanceContext.tsx
+
+export class FunctionData {};
+export class ProcessedDataPointInner{}
+export class ProcessedDataPoint{
+  vm: { [id:string]: ProcessedDataPointInner; };
+};
+//export type ProcessedDataPoint= number;
+export class PerformanceStats {};
+
+interface PerformanceContextType {
+  rawData: FunctionData[];
+  processedData: ProcessedDataPoint[];
+  selectedTest: string;
+  availableTests: string[];
+  availableVersions: string[];
+  getStats: (functionName: string) => PerformanceStats;
+  setSelectedTest: (test: string) => void;
+}
+
+export const PerformanceContext = createContext<PerformanceContextType | null>(null);
+
+export const usePerformanceContext = () => {
+  const context = useContext(PerformanceContext);
+  if (!context) {
+    throw new Error('usePerformanceContext must be used within a PerformanceProvider');
+  }
+  return context;
+};
+
+// ```
+
+// ```typescript
+// components/PerformanceREPL.tsx
+
+interface REPLResult {
+  input: string;
+  output: string;
+  error?: boolean;
+}
+
+const PerformanceREPL: React.FC = () => {
+  const [input, setInput] = useState('');
+  const [history, setHistory] = useState<REPLResult[]>([]);
+  const context = usePerformanceContext();
+
+  // Create a safe evaluation context with access to performance data
+  const createEvalContext = () => {
+    const {
+      rawData,
+      processedData,
+      selectedTest,
+      availableTests,
+      availableVersions,
+      getStats
+    } = context;
+
+    // Add any utility functions you want to expose
+    const helpers = {
+      getAverageForVersion: (version: string) => {
+        return processedData.reduce((sum, point) => {
+          return sum + (point.vm[version]?.count || 0);
+        }, 0) / processedData.length;
+      },
+      
+      getFunctionNames: () => {
+        return rawData.map(d => d.functionName);
+      },
+      
+      compareVersions: (v1: string, v2: string) => {
+        return processedData.map(point => ({
+          function: point.name,
+          difference: (point.vm[v2]?.count || 0) - (point.vm[v1]?.count || 0)
+        }));
+      }
+    };
+
+    // Return the context object with additional helpers
+    return {
+      data: rawData,
+      processed: processedData,
+      currentTest: selectedTest,
+      tests: availableTests,
+      versions: availableVersions,
+      getStats,
+      ...helpers
+    };
+  };
+
+  const executeCode = useCallback(() => {
+    try {
+      const evalContext = createEvalContext();
+      
+      // Create a function from the input with access to context
+      const fn = new Function(
+        ...Object.keys(evalContext),
+        `try { return ${input} } catch (e) { throw e }`
+      );
+      
+      // Execute the function with context variables
+      const result = fn(...Object.values(evalContext));
+      
+      // Format the result
+      const output = typeof result === 'object' 
+        ? JSON.stringify(result, null, 2)
+        : String(result);
+
+      setHistory(prev => [...prev, { input, output }]);
+    } catch (error) {
+      setHistory(prev => [...prev, {
+        input,
+        output: `Error: ${error.message}`,
+        error: true
+      }]);
+    }
+  }, [input, context]);
+
+  return (
+    <Card className="mt-6">
+      <CardHeader>
+        <CardTitle>Performance Analysis REPL</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          <div className="flex gap-2">
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="flex-1 min-h-[100px] p-2 font-mono text-sm border rounded"
+              placeholder="Enter JavaScript code to analyze performance data..."
+            />
+            <Button onClick={executeCode} className="self-start">
+              Execute
+            </Button>
+          </div>
+          
+          <ScrollArea className="h-[300px] border rounded p-2">
+            {history.map((result, index) => (
+              <div key={index} className="mb-4">
+                <div className="font-mono text-sm text-gray-600">
+                  &gt; {result.input}
+                </div>
+                <pre className={`font-mono text-sm mt-1 ${
+                  result.error ? 'text-red-500' : 'text-green-600'
+                }`}>
+                  {result.output}
+                </pre>
+              </div>
+            ))}
+          </ScrollArea>
+
+          <div className="text-sm text-gray-600">
+            <p>Available variables and helpers:</p>
+            <ul className="list-disc pl-6">
+              <li>data: Raw performance data</li>
+              <li>processed: Processed data points</li>
+              <li>currentTest: Currently selected test</li>
+              <li>tests: Available test cases</li>
+              <li>versions: Available versions</li>
+              <li>getStats(functionName): Get statistics for a function</li>
+              <li>getAverageForVersion(version): Calculate average for a version</li>
+              <li>getFunctionNames(): Get list of all function names</li>
+              <li>compareVersions(v1, v2): Compare performance between versions</li>
+            </ul>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default PerformanceREPL;
+
+// ```
+
+// ```typescript
+// components/PerformanceAnalyzer.tsx
+"use client";
+
+
+interface PerformanceAnalyzerProps {
+  dataProvider: PerformanceDataProvider;
+  config?: PerformanceConfig;
+  showREPL?: boolean;
+}
+
+export const PerformanceAnalyzer: React.FC<PerformanceAnalyzerProps> = ({
+  dataProvider,
+  config = {},
+  showREPL = false
+}) => {
+  const { data, tests, versions, loading, error } = usePerformanceData(dataProvider);
+  const [selectedTest, setSelectedTest] = useState<string>(tests[0] || '');
+
+  const processedData = useMemo(() => 
+    processData(data, selectedTest),
+    [data, selectedTest]
+  );
+
+  // Create context value
+  const contextValue = useMemo(() => ({
+    rawData: data,
+    processedData,
+    selectedTest,
+    availableTests: tests,
+    availableVersions: versions,
+    getStats: (functionName: string) => {
+      const func = data.find(d => d.functionName === functionName);
+      return func ? getPerformanceStats(func.metrics) : null;
+    },
+    setSelectedTest
+  }), [data, processedData, selectedTest, tests, versions]);
+
+  if (loading) {
+    return <div className="p-6">Loading performance data...</div>;
+  }
+
+  if (error) {
+    return (
+      <Alert variant="destructive">
+        <AlertDescription>
+          Failed to load performance data: {error.message}
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
+  return (
+    <PerformanceContext.Provider value={contextValue}>
+      <div className="p-6 max-w-6xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6">Performance Analysis Dashboard</h1>
+        
+        <div className="mb-6">
+          <Select 
+            value={selectedTest} 
+            onValueChange={setSelectedTest}
+          >
+            <SelectTrigger className="w-48">
+              <SelectValue placeholder="Select test case" />
+            </SelectTrigger>
+            <SelectContent>
+              {tests.map(test => (
+                <SelectItem key={test} value={test}>
+                  {config.functionNameFormatter?.(test) || test}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <PerformanceChart 
+          data={processedData}
+          versions={versions}
+          config={config.chart}
+          versionFormatter={config.versionFormatter}
+        />
+        
+        <StatsTable 
+          data={data}
+          functionNameFormatter={config.functionNameFormatter}
+        />
+
+        {showREPL && <PerformanceREPL />}
+      </div>
+    </PerformanceContext.Provider>
+  );
+};
+
+// ```
+
+// Now you can use the REPL to interact with the performance data. Here's how to use it:
+
+// ```typescript
+// Example usage in your app
+
+
+export default function Dashboard() {
+  return (
+    <PerformanceAnalyzer 
+      dataProvider={yourDataProvider}
+      showREPL={true}  // Enable the REPL
+    />
+  );
+}
+// ```
+
+// Example REPL queries you can run:
+
+// ```javascript
+// Get average performance for version 'v1'
+getAverageForVersion('v1')
+
+// Compare v1 and v2 across all functions
+compareVersions('v1', 'v2')
+
+// Get statistics for a specific function
+getStats('ark_ff::fields::models::fp::montgomery_backend::MontBackend')
+
+// Get all function names
+getFunctionNames()
+
+// Access raw data
+data.filter(d => d.metrics[currentTest].v1.count > 1000)
+
+// Get current test and available versions
+console.log({ currentTest, versions })
+// ```
+
+// Key features of the REPL:
+
+// 1. **Safe Execution Environment**:
+//    - Executes code in a controlled context
+//    - Has access to performance data and helper functions
+//    - Handles errors gracefully
+
+// 2. **Rich Context**:
+//    - Access to raw and processed data
+//    - Current test and version information
+//    - Helper functions for common analyses
+
+// 3. **History**:
+//    - Keeps track of executed commands
+//    - Shows errors in red
+//    - Formats object output with proper indentation
+
+// 4. **Helper Functions**:
+//    - Provides useful utility functions
+//    - Easy to add new helper functions
+//    - Documentation of available variables
+
+// Would you like me to:
+// 1. Add more helper functions to the REPL?
+// 2. Add ability to save/load REPL sessions?
+// 3. Add autocomplete functionality to the REPL?

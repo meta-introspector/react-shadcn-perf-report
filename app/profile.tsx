@@ -15,19 +15,25 @@ import {
 } from "@/components/ui/select";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-import { Profile, Version, TestRun,FunctionData,Stats,TestCase,TestMetrics } from "./types";
+import { Profile , findTestCase} from "./ProfileData";
+import { TestRun } from "./TestRun";
+import { FunctionData } from "./FunctionData";
+import { TestMetrics } from "./TestMetrics";
+import { Stats } from "./Stats";
+import { Version } from "./Version";
+import { TestCase } from "./TestCase";
 
 interface ReportSelectorProps {
   testCases: TestCase[];
   versions: Version[];
-  testRun: TestRun[];
+  testRuns: TestRun[];
 }
 
 interface ReportSelectorState {
   selectedTestCase: TestCase | null;
 }
 
-class ReportSelector extends React.Component<ReportSelectorProps, ReportSelectorState> {
+class ReportSelectorComponent extends React.Component<ReportSelectorProps, ReportSelectorState> {
   state: ReportSelectorState = {
     selectedTestCase: null,
   };
@@ -80,19 +86,16 @@ class ProfileProps {}
 class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   state: ProfileState = {
     // Initialize state as needed
-    testCases: [],
+    testCases: [{name:"t1",file:"t1"}],
     versions: [],
-    testRun: [],
-    findTestCase: function (name: string): TestCase {
-      return {name:"test",file:"test"}
-    }
+    testRuns: []    
   };
 
   prepareReport = () => {
-    const reportSelector = new ReportSelector({
+    const reportSelector = new ReportSelectorComponent({
       testCases: this.state.testCases,
       versions: this.state.versions,
-      testRun: this.state.testRun,
+      testRuns: this.state.testRuns,
     });
     return reportSelector;
   };
@@ -105,19 +108,26 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
 
 
 function listTestCase(tc:TestCase) :ReactNode {
-  return <SelectItem value="{tc.name}">{tc.name}</SelectItem>
+  return <SelectItem key="{tc.name}" value="{tc.name}">{tc.name}</SelectItem>
 }
 
 function PerformanceAnalyzer() {
-  const [getProfile, setProfile] = useState<Profile>();
+  const [getProfile, setProfile] = useState<Profile>({
+    versions:[],
+    testRuns:[],
+    testCases:[
+      {name:"1",file:"1"}
+    ]
+  });
   const [testCase,setTestCase] = useState<TestCase>();
-  
+  console.log(getProfile);
+  console.log(getProfile?.testCases)
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Performance Analysis Dashboard</h1>
 
       <div className="mb-6">
-        <Select value={testCase?.name} onValueChange={(value: string) => setTestCase(getProfile?.findTestCase(value))}>
+        <Select value={testCase?.name} onValueChange={(value: string) => setTestCase(findTestCase(getProfile,value))}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Select test case" />
           </SelectTrigger>
