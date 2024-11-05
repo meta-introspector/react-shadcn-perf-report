@@ -20,11 +20,11 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
 
   function listGenericList(x:GenericElement) :ReactNode {  
     let ret= <SelectItem key={x} value={x}>{x}</SelectItem>
-    console.log(ret)
+    //console.log(ret)
     return ret
   }
 /*  function findGenericList(x:GenericListDefinition,name: string) : GenericElement{
-    console.log(name);
+//console.log(name);
     return x.values?.find(item=>item === name)||"not found";
   }
   */
@@ -32,11 +32,25 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
   //  const [getGenericListDefinition, setGenericListDefinition] = useState<GenericListDefinition>(props.definition);
   const [genericSelection,setGenericSelection] = useState<GenericElement>(props.default);
   //setGenericSelection(props.default);
-  console.log("debug",props,genericSelection)
+  //console.log("debug",props,genericSelection)
+
+  // set the defaul callback
+  if (props.definition.generic_target) {
+    //props.definition.generic_target(props.definition,props.default);
+  }
+  
   return (
     <span>{props.definition?.title}:
       <Select value={genericSelection}
-	onValueChange={(value: string) => { console.log(value); if (props.definition.target) {props.definition.target(value);};return setGenericSelection(value)}}>
+	onValueChange={(value: string) => { 
+	  if (props.definition.target) {
+	    props.definition.target(value);
+	  };
+	  if (props.definition.generic_target) {
+	    //console.log(value);
+	    props.definition.generic_target(props.definition,value);
+	  };
+	  return setGenericSelection(value)}}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Select {datatype.name}" />
           </SelectTrigger>

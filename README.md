@@ -35,14 +35,16 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-# Lisp
+# Emacs Lisp
 
-Now i am just using lsp,
+Now I am just using lsp, with tide and it is working
 ```
 typescript-ts-mode
 (straight-use-package 'company-mode)
 lsp
 flycheck-mode
+tide-setup
+tide-mode
 ```
 
 Or

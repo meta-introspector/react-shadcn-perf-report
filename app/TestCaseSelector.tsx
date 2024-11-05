@@ -20,7 +20,7 @@ export function TestCaseSelector() {
   }
 
   function findTestCase(prof:Profile, name: string) {
-    console.log(name);
+    //console.log(name);
     return prof.testCases.find(item=>item.name === name);
   }
   

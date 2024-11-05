@@ -8,9 +8,9 @@ import type {  EvalCodeFunction } from "./types"
 import { ReactRepl } from "./ReactReplView"
 function actionOnChangeTab (){}
 function actionOnSubmit (): Promise<void>{
-  console.log("submit");
+  //console.log("submit");
   return new Promise(resolve => {
-    console.log("resolve");
+    //console.log("resolve");
     resolve()
   });
 }

@@ -19,7 +19,7 @@ export function GitHostingSelector() {
   }
 
   function findGitHosting(name: string):GitHosting|undefined {
-    console.log(name);
+    //console.log(name);
     return accounts?.gitHostings?.find(item=>item.name === name);
   }
   

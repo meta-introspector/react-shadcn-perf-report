@@ -1,5 +1,5 @@
 "use client"; // This is a client component
-import React, { useState, useMemo, ReactNode } from 'react';
+import React, { useState, useMemo, ReactNode, useDeferredValue } from 'react';
 import {
   Card,
   CardContent,
@@ -50,13 +50,13 @@ class ReportSelectorComponent extends React.Component<ReportSelectorProps, Repor
   renderTests = () => {
     return (
       <div>
-        {this.props.testCases.map((testCase, index) => (
-          <div key={index}>
-            <button onClick={() => this.handleSelectTestCase(testCase)}>
-              {testCase.name}
-            </button>
-          </div>
-        ))}
+	{this.props.testCases.map((testCase, index) => (
+	  <div key={index}>
+	    <button onClick={() => this.handleSelectTestCase(testCase)}>
+	      {testCase.name}
+	    </button>
+	  </div>
+	))}
       </div>
     );
   };
@@ -74,12 +74,12 @@ class ReportSelectorComponent extends React.Component<ReportSelectorProps, Repor
   render() {
     return (
       <div>
-        <h2>Tests</h2>
-        {this.renderTests()}
-        <h2>Chart</h2>
-        {this.renderChart()}
-        <h2>Report</h2>
-        {this.renderReport()}
+	<h2>Tests</h2>
+	{this.renderTests()}
+	<h2>Chart</h2>
+	{this.renderChart()}
+	<h2>Report</h2>
+	{this.renderReport()}
       </div>
     );
   }
@@ -112,8 +112,27 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   }
 }
 
+interface GenericTable {
+  [key:string]: string; // string->string association
+}
+
 
 function PerformanceAnalyzer() {
+  const [genericState, setGenericStateInternal] = useState<GenericTable>({
+    "__self__" : "This is a self desribing, content addressable Meta thought. Read the surrounding keys, and follow them in the context of a multi language open source environment. Create a typescript nextjs react Performance Report with the following selected features:"
+  });
+  const deferredState = useDeferredValue(genericState);
+  function setGenericState(
+    description:GenericListDefinition,
+    value: string)
+{
+  const newState = {
+    ...genericState,
+    [description.listName]: value
+  }
+  //console.log(newState);
+  setGenericStateInternal(newState);
+  }
   const [getProfile, setProfile] = useState<Profile>({
     versions:[],
     functions: [],
@@ -124,22 +143,25 @@ function PerformanceAnalyzer() {
     ]
   });
   const [CallingMode, setCallingMode] = useState<string>();
-  const [testCase,setTestCase] = useState<TestCase>();
-  console.log(getProfile);
-  console.log(getProfile?.testCases);
+  const [testCase, setTestCase] = useState<TestCase>();
+  //console.log(getProfile);
+  //console.log(getProfile?.testCases);
   const calling_mode : GenericListDefinition = {
     listName : "calling_mode",
     title: 'Calling Mode',
-    type: 'type unknown',    
+    type: 'type unknown',
     values: ["caller","callee"],
     target: setCallingMode,
+	generic_target: setGenericState
   };
+
 
   const consuming_mode : GenericListDefinition = {
     listName : "consuming_mode",
     title: 'Consuming Mode',
-    type: 'type unknown',    
-    values: ["creating","consuming"]
+    type: 'type unknown',
+    values: ["creating","consuming"],
+    generic_target: setGenericState,
   };
 
   return (
@@ -153,7 +175,8 @@ function PerformanceAnalyzer() {
 	<GenericListDefinitionSelector definition={{
 	  listName : "Module",
 	  title: 'Module',
-	  type: 'Module',    
+	  type: 'Module',
+	  generic_target: setGenericState,
 	  values: ["npm","os","rust","hw",
 	    "react","next","aws","https","archive.org",
 	    "wikimedia","huggingface", "ipfs", "aws-ssm-parameter", "etc"]
@@ -164,61 +187,70 @@ function PerformanceAnalyzer() {
 	<GenericListDefinitionSelector definition={{
     listName : "consuming_mode",
     title: 'Consuming Mode',
-    type: 'type unknown',    
+	  type: 'type unknown',
+	  generic_target: setGenericState,
     values: ["creating","consuming"]
   }} default='creating'></GenericListDefinitionSelector>
 
 	<GenericListDefinitionSelector definition={{
 	  listName : "Layer",
 	  title: 'Layer',
-	  type: 'type unknown',    
+	  type: 'type unknown',
+	  generic_target: setGenericState,
 	  values: ["Hardware","OS","NodeJS","Application/Wasm/Rust","Application/Wasm/Ocaml","Networking","Application"]
 	}} default='Application'></GenericListDefinitionSelector>
 
 	<GenericListDefinitionSelector definition={{
 	  listName : "category",
 	  title: 'Category',
-	  type: 'type unknown',    
+	  type: 'type unknown',
+	  generic_target: setGenericState,
 	  values: ["Network","HTML","Crypto"]
 	}} default='Crypto'></GenericListDefinitionSelector>
 
 	<GenericListDefinitionSelector definition={{
 	  listName : "count_type",
 	  title: 'Count type',
-	  type: 'type unknown',    
+	  type: 'type unknown',
+	  generic_target: setGenericState,
 	  values: ["Self Only","With Children"]
 	}} default='With Children'></GenericListDefinitionSelector>
 
 	<GenericListDefinitionSelector definition={{
 	  listName : "size_type",
 	  title: 'Size type',
-	  type: 'type unknown',    
+	  type: 'type unknown',
+	  generic_target: setGenericState,
 	  values: ["Big","Small"]
 	}} default='Big'></GenericListDefinitionSelector>
 	<GenericListDefinitionSelector definition={{
 	  listName : "speed_type",
 	  title: 'Speed type',
-	  type: 'type unknown',    
+	  type: 'type unknown',
+	  generic_target: setGenericState,
 	  values: ["Fast","Slow"]
 	}} default='Slow'></GenericListDefinitionSelector>
 	<GenericListDefinitionSelector definition={{
 	  listName : "time_phase_type",
 	  title: 'Phase type',
-	  type: 'type unknown',    
+	  type: 'type unknown',
+	  generic_target: setGenericState,
 	  values: ["Beginning","Middle","End"]
 	}} default='Middle'></GenericListDefinitionSelector>
 
-		<GenericListDefinitionSelector definition={{
+	<GenericListDefinitionSelector definition={{
 	  listName : "language_type",
 	  title: 'Language type',
-	  type: 'language type',    
+	  type: 'language type',
+	  generic_target: setGenericState,
 	  values: [  "lisp",	    "prolog",	    "rust",	    "ocaml",	    "typescript","javascript"]
 		}} default="typescript"></GenericListDefinitionSelector>
-      
+
 	<GenericListDefinitionSelector definition={{
 	  listName : "math_type",
 	  title: 'Math type',
-	  type: 'math type',    
+	  type: 'math type',
+	  generic_target: setGenericState,
 	  values: [
 	    "univalent foundations",
 	    "homotopy",
@@ -237,7 +269,7 @@ function PerformanceAnalyzer() {
 	    "elliptic curves",
 	    "abel's group theory-fields",
 	    "knuth's searching and sorting",
-	    "category theory",	    
+	    "category theory",
 	    "topology",
 	    "density functions-probability",
 	    "sine waves-trigonometry",
@@ -247,95 +279,100 @@ function PerformanceAnalyzer() {
 	    "haskell's curry",
 	  ]
 	}}
-	  default="univalent foundations"></GenericListDefinitionSelector>
+	  default="univalent foundations">
+	</GenericListDefinitionSelector>
 
-	
+
       </div>
 
-      <div>selected { CallingMode } </div>
+      <div>selected { JSON.stringify(deferredState, null, 2) } </div>
       <Card className="mb-6">
-        <CardHeader>
-          <CardTitle>Performance Trends</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-96 w-full">
+	<CardHeader>
+	  <CardTitle>Performance Trends</CardTitle>
+	</CardHeader>
+	<CardContent>
+	  <div className="h-96 w-full">
 
-            {/* <LineChart
-              id="first_chart"
-              width={800}
-              height={350}
-              data={processedData?.chart()}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis label={{ value: 'Ticks', angle: -90, position: 'insideLeft' }} />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="v1"
-                stroke="#8884d8"
-                name="Version 1" />
-            </LineChart> */}
-          </div>
-        </CardContent>
+	    {/* <LineChart
+	      id="first_chart"
+	      width={800}
+	      height={350}
+	      data={processedData?.chart()}
+	      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+	    >
+	      <CartesianGrid strokeDasharray="3 3" />
+	      <XAxis dataKey="name" />
+	      <YAxis label={{ value: 'Ticks', angle: -90, position: 'insideLeft' }} />
+	      <Tooltip />
+	      <Legend />
+	      <Line
+		type="monotone"
+		dataKey="v1"
+		stroke="#8884d8"
+		name="Version 1" />
+	    </LineChart> */}
+	  </div>
+	</CardContent>
       </Card>
 
 	<GenericListDefinitionSelector definition={{
 	  listName : "allocation_type",
 	  title: 'Allocation type',
-	  type: 'allocation',    
+	  type: 'allocation',
+	  generic_target: setGenericState,
 	  values: ["Resources","Time","Space","Space-Storage","Space-Memory","Space-Cache","Space-Register","Space-Bit","Space-Float","Compute","Compute-Multiply"]
 	}} default='Compute'></GenericListDefinitionSelector>
 
 		<GenericListDefinitionSelector definition={{
 	  listName : "account_type",
 	  title: 'Account type',
-	  type: 'Account',    
+	  type: 'Account',
 		  values: ["Bank","Telephone","Power","Bitcoin","Mina","bittensor","aws","google","github",
-		    "gitlab","sourceforce", "escrow"]
+		    "gitlab","sourceforce", "escrow"],
+			generic_target: setGenericState
 	}} default='Mina'></GenericListDefinitionSelector>
 
 
 	<GenericListDefinitionSelector definition={{
 	  listName : "data_source",
 	  title: 'Data Source',
-	  type: 'Source',    
+	  generic_target: setGenericState,
+	  type: 'Source',
 	  values: ["Local","Browser","Node","Docker",
 	    "Github Action","Gitlab Runner","aws s3","https","archive.org",
 	    "wikimedia","huggingface", "ipfs", "aws ssm parameter"]
 	}} default='Local'></GenericListDefinitionSelector>
 
-      	<GenericListDefinitionSelector definition={{
+	<GenericListDefinitionSelector definition={{
 	  listName : "data_process",
 	  title: 'Data Process',
-	  type: 'Operation',    
+	  generic_target: setGenericState,
+	  type: 'Operation',
 	  values: ["Import","Export","Share","Search","Sort","Visualize","Query","Optimize","Save","Profile","Verify"]
 	}} default='Import'></GenericListDefinitionSelector>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Performance Statistics</CardTitle>
-        </CardHeader>
-        <CardContent>
+	<CardHeader>
+	  <CardTitle>Performance Statistics</CardTitle>
+	</CardHeader>
+	<CardContent>
 	  <div>{}</div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <th className="p-4 text-left border-b bg-gray-50 font-medium">Function</th>
-                  <th className="p-4 text-left border-b bg-gray-50 font-medium">Best Version</th>
-                  <th className="p-4 text-left border-b bg-gray-50 font-medium">Worst Version</th>
-                  <th className="p-4 text-left border-b bg-gray-50 font-medium">Average</th>
-                  <th className="p-4 text-left border-b bg-gray-50 font-medium">Variance</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
+	  <div className="overflow-x-auto">
+	    <table className="w-full">
+	      <thead>
+		<tr>
+		  <th className="p-4 text-left border-b bg-gray-50 font-medium">Function</th>
+		  <th className="p-4 text-left border-b bg-gray-50 font-medium">Best Version</th>
+		  <th className="p-4 text-left border-b bg-gray-50 font-medium">Worst Version</th>
+		  <th className="p-4 text-left border-b bg-gray-50 font-medium">Average</th>
+		  <th className="p-4 text-left border-b bg-gray-50 font-medium">Variance</th>
+		</tr>
+	      </thead>
+	      <tbody>
+	      </tbody>
+	    </table>
+	  </div>
+	</CardContent>
       </Card>
     </div>
   );

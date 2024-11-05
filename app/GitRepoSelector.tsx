@@ -19,7 +19,7 @@ export function GitRepoSelector() {
   }
 
   function findGitRepo(name: string):GitRepository|undefined {
-    console.log(name);
+    //console.log(name);
     return gitHosting?.repos?.find(item=>item.name === name);
   }
   
