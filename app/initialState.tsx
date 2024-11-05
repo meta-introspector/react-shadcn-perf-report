@@ -2,7 +2,6 @@
 
 import { ReportState } from "./ReportState";
 
-
 export const initialState: ReportState = {
   rawSelections: {
     Module: '',
