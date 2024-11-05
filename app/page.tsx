@@ -1,5 +1,5 @@
 //import Image from "next/image";
-import PerformanceAnalyzer from "./profile"
+import PerformanceAnalyzer from "./PerformanceAnalyser"
 import GeneralPurposeReplUI from "./repl"
 
 export default function Home() {
