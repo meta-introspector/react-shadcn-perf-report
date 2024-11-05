@@ -1,5 +1,6 @@
 "use client"; // This is a client component
-import React, { useState, ReactNode } from 'react';
+
+import React, { useState, ReactNode, useEffect } from 'react';
 import {
   Select,
   SelectContent,
@@ -34,9 +35,13 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
   //setGenericSelection(props.default);
   //console.log("debug",props,genericSelection)
 
+  function update(){
+    //props.definition.generic_target(props.definition,props.default);
+  }
+  
   // set the defaul callback
   if (props.definition.generic_target) {
-    //props.definition.generic_target(props.definition,props.default);
+    //useEffect(update);
   }
   
   return (
@@ -47,7 +52,7 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
 	    props.definition.target(value);
 	  };
 	  if (props.definition.generic_target) {
-	    //console.log(value);
+	    console.log("generic target",props,value);
 	    props.definition.generic_target(props.definition,value);
 	  };
 	  return setGenericSelection(value)}}>
