@@ -8,14 +8,22 @@ import { Profile } from "./ProfileData";
 import { reportReducer } from "./reportReducer";
 //import { generateReport } from "./generateReport";
 import {PerformanceRedux} from "./PerformanceRedux"
-function PerformanceAnalyzer() {
+export function PerformanceAnalyzerConfigurations() {
 
   const {generateReport, resetReport, state} = PerformanceRedux();
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Performance Analysis Dashboard</h1>
-    </div>
-  );
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Performance Report</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-medium">Configuration</h3>
+              <pre className="bg-gray-50 p-4 rounded-lg">
+                {JSON.stringify(state.configuration, null, 2)}
+              </pre>
+            </div></div>
+            </CardContent></Card>
+);
 }
-
-export default PerformanceAnalyzer;

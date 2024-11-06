@@ -91,6 +91,7 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalContentRef = useRef<HTMLDivElement>(null);
   const [activeInputValue, setActiveInputValue] = useState<string>("");
+  const [suggestion, setSuggestion] = useState<string>("No suggestion");
   const [historySelectIndex, setHistorySelectIndex] = useState<number>(-1);
   useEffect(() => {
     if (!terminalContentRef.current) return
@@ -147,9 +148,9 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
 	    //      console.log("key up");
 	    if (e.key === "Enter") {
 	      ///        console.log("keyup enter");
-        if (onSubmit) {
+              if (onSubmit) {
 	        onSubmit(activeInputValue)
-        }
+              }
 	      setActiveInputValue("");
 	    } else if (e.key === "ArrowUp") {
 	      const newHSI = historySelectIndex + 1;
@@ -177,13 +178,18 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
 		}
 	      }
 	    }
+	    else {
+	      // now we can autocomplete
+	      setSuggestion("Some Suggestion")
+	    }
 	  }}
       onChange={(e) => setActiveInputValue(e.target.value)}
       value={activeInputValue}
       ref={inputRef}
-      />
+	  />
+	  <ul><li>{suggestion}</li></ul>
     </ActiveInputLine>
-      
+
       </TerminalContent>
 	</Container>
   )
