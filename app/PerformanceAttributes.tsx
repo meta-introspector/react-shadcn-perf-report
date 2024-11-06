@@ -13,7 +13,7 @@ import { reportReducer } from "./reportReducer";
 import { TestCase } from "./TestCase";
 import { TestCaseSelector } from "./TestCaseSelector";
 
-function PerformanceAttributes() {
+export function PerformanceAttributes() {
   const [state, dispatch] = useReducer(reportReducer, initialState);
 
     const updateSelection = useCallback((key: string, value: string) => {

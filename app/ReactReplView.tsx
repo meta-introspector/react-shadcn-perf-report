@@ -4,7 +4,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { LineT, ReactReplPropsT } from "./types";
-
+import  { PerformanceAttributes } from "./PerformanceAttributes";
 const Container = styled.div`
 width: 1200px;
   font-family: monospace;
@@ -188,6 +188,7 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
       ref={inputRef}
 	  />
 	  <ul><li>{suggestion}</li></ul>
+    <PerformanceAttributes/>
     </ActiveInputLine>
 
       </TerminalContent>
