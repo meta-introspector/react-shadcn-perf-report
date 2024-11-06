@@ -9,7 +9,7 @@ import prettyFormat from "pretty-format"
 
 const AsyncFunction: FunctionConstructor = Object.getPrototypeOf(async function () {}).constructor
 
-function scopeEval(scope: Scope, script: string): Promise<Scope> {
+function scopeEval(scope: any, script: string): Promise<Scope> {
   script = script
     .trim()
     .replace(/^var /, "")
@@ -18,11 +18,19 @@ function scopeEval(scope: Scope, script: string): Promise<Scope> {
   return AsyncFunction("return (" + script + ")").bind(scope)()
 }
 
+declare global {
+    interface Window { MyNamespace: any; }
+}
+
+
+
 async function execAndGetLine(execLine: string): Promise<LineT> {
   //console.log("execAndGetLine", execLine);
    if (!execLine.trim()) return { type: "error", value: "Empty"}
-   try {
-     const evalOutput = await scopeEval(window, execLine)
+  try {
+    window.MyNamespace = window.MyNamespace || { };
+    window.MyNamespace= { foobar: 1 };
+    const evalOutput = await scopeEval(global, execLine)
      //console.log("evalOutput", evalOutput);
      return { type: "output", value: prettyFormat(evalOutput) }
    } catch (e) {
