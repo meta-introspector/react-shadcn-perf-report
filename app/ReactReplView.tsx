@@ -92,6 +92,9 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
   const terminalContentRef = useRef<HTMLDivElement>(null);
   const [activeInputValue, setActiveInputValue] = useState<string>("");
   const [suggestion, setSuggestion] = useState<string>("No suggestion");
+  function mysetsuggestion(suggestion:string){
+    setSuggestion(suggestion)
+  }
   const [historySelectIndex, setHistorySelectIndex] = useState<number>(-1);
   useEffect(() => {
     if (!terminalContentRef.current) return
@@ -188,7 +191,11 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
       ref={inputRef}
 	  />
 	  <ul><li>{suggestion}</li></ul>
-    <PerformanceAttributes/>
+    <PerformanceAttributes 
+    setSuggestion={setSuggestion} 
+    >
+
+    </PerformanceAttributes>
     </ActiveInputLine>
 
       </TerminalContent>
