@@ -130,7 +130,12 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
 	  )}
 	</Header>
     )}
-    <TerminalContent height={height} ref={terminalContentRef}>
+
+	  <div >
+	  <ul><li>{suggestion}</li></ul>
+	  <PerformanceAttributes setSuggestion={setSuggestion}></PerformanceAttributes>
+</div>
+      <TerminalContent height={height} ref={terminalContentRef}>
       {lines?.map((line: LineT, i: number) =>
         line.type === "input" ? (
           <InputLine key={i}>
@@ -190,16 +195,13 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
       value={activeInputValue}
       ref={inputRef}
 	  />
-	  <ul><li>{suggestion}</li></ul>
-    <PerformanceAttributes 
-    setSuggestion={setSuggestion} 
-    >
 
-    </PerformanceAttributes>
+
+	  
     </ActiveInputLine>
-
       </TerminalContent>
-	</Container>
+
+    </Container>
   )
 }
 
