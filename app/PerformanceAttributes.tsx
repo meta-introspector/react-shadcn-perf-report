@@ -8,8 +8,8 @@ import { initialState } from "./initialState";
 import { Profile } from "./ProfileData";
 import { reportReducer } from "./reportReducer";
 import { TestCaseSelector } from "./TestCaseSelector";
-import { PhaseList } from "./PhaseList";
-import { LanguageList } from "./LanguageList";
+import { GenericList as PhaseList } from "./PhaseList";
+import { GenericList as LanguageList } from "./LanguageList";
 import { MathList } from "./MathList";
 import { ResourceList } from "./ResourceList";
 import { DataTypeList } from "./DataTypeList";
@@ -78,25 +78,25 @@ export function PerformanceAttributes(props:PerfAttrsProps) {
   return (
     <div>
       
-      	<GitHostingSelector/>
-      	<GitRepoSelector/>
+      <GitHostingSelector/>
+      <GitRepoSelector/>
 	      <TestCaseSelector/>
 	      {CallingModeList(setGenericState)}
-        {ConsumingModeList(setGenericState)}      
-        {LayerList(setGenericState)}      
-  {FunctionCategories(setGenericState)}
-  {CallingModeList(setGenericState)}
-  {SizeList(setGenericState)}
-  {SpeedList(setGenericState)}
-  {PhaseList(setGenericState)}
-  {LanguageList(setGenericState)}   
-  {MathList(setGenericState)}
-	{ResourceList(setGenericState)}
-	{DataTypeList(setGenericState)}
-	{AccountList(setGenericState)}
-	{SourceList(setGenericState)}
-	{ModuleList(setGenericState)}
-	{OperationList(setGenericState)}
+      {ConsumingModeList(setGenericState)}      
+      {LayerList(setGenericState)}      
+      {FunctionCategories(setGenericState)}
+      {CallingModeList(setGenericState)}
+      {SizeList(setGenericState)}
+      {SpeedList(setGenericState)}
+      {PhaseList(setGenericState)}
+      {LanguageList(setGenericState)}   
+      {MathList(setGenericState)}
+      {ResourceList(setGenericState)}
+      {DataTypeList(setGenericState)}
+      {AccountList(setGenericState)}
+      {SourceList(setGenericState)}
+      {ModuleList(setGenericState)}
+      {OperationList(setGenericState)}
   <div>selected { JSON.stringify(deferredState, null, 2) } </div>
 </div>
   );
