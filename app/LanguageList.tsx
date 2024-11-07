@@ -7,7 +7,7 @@ export function getDescription() :GenericListDefinition {
     listName: "language_type",
     title: 'Language type',
     type: 'language type',
-    generic_target: setGenericState,
+    //    generic_target: setGenericState,
     values: ["lisp", "prolog", "rust", "ocaml", "typescript", "javascript"]
   }
 }
