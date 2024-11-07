@@ -1,16 +1,12 @@
 "use client"
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useReducer, useCallback, useState, useDeferredValue } from "react";
 import { GenericListDefinition } from "./GenericListDefinition";
 import { GenericTable } from "./GenericTable";
 import { GitRepoSelector } from "./GitRepoSelector";
 import { GitHostingSelector } from "./HostingSelector";
 import { initialState } from "./initialState";
-import { GenericListDefinitionSelector } from "./ListSelector";
 import { Profile } from "./ProfileData";
 import { reportReducer } from "./reportReducer";
-import { TestCase } from "./TestCase";
 import { TestCaseSelector } from "./TestCaseSelector";
 import { PhaseList } from "./PhaseList";
 import { LanguageList } from "./LanguageList";
@@ -28,9 +24,11 @@ import { LayerList } from "./LayerList";
 import { ConsumingModeList } from "./ConsumingModeList";
 import { CallingModeList } from "./CallingModeList";
 
+
 class PerfAttrsProps{
 	setSuggestion:any
 }
+
 export function PerformanceAttributes(props:PerfAttrsProps) {
   const [state, dispatch] = useReducer(reportReducer, initialState);
 
@@ -75,32 +73,32 @@ export function PerformanceAttributes(props:PerfAttrsProps) {
       {name:"tes2",file:"test"}
     ]
   });
+ 
   
   return (
     <div>
+      
       	<GitHostingSelector/>
-	<GitRepoSelector/>
-	<TestCaseSelector/>
-
-	{CallingModeList(setGenericState)}
-    {ConsumingModeList(setGenericState)}      
-    {LayerList(setGenericState)}      
-    {FunctionCategories(setGenericState)}
-    {CallingModeList(setGenericState)}
-    {SizeList(setGenericState)}
-    {SpeedList(setGenericState)}
-    {PhaseList(setGenericState)}
-    {LanguageList(setGenericState)}   
-    {MathList(setGenericState)}
+      	<GitRepoSelector/>
+	      <TestCaseSelector/>
+	      {CallingModeList(setGenericState)}
+        {ConsumingModeList(setGenericState)}      
+        {LayerList(setGenericState)}      
+  {FunctionCategories(setGenericState)}
+  {CallingModeList(setGenericState)}
+  {SizeList(setGenericState)}
+  {SpeedList(setGenericState)}
+  {PhaseList(setGenericState)}
+  {LanguageList(setGenericState)}   
+  {MathList(setGenericState)}
 	{ResourceList(setGenericState)}
-  	{DataTypeList(setGenericState)}
+	{DataTypeList(setGenericState)}
 	{AccountList(setGenericState)}
 	{SourceList(setGenericState)}
 	{ModuleList(setGenericState)}
 	{OperationList(setGenericState)}
-
-      <div>selected { JSON.stringify(deferredState, null, 2) } </div>
-    </div>
+  <div>selected { JSON.stringify(deferredState, null, 2) } </div>
+</div>
   );
 }
 

@@ -1,6 +1,7 @@
 //@ObjectType()
 export type GenericElement = string;
 export class GenericListDefinition {
+  
   listName!: string; // name of list
   //default!: string;
   title!: string; // title of list
