@@ -1,6 +1,6 @@
 //import Image from "next/image";
-import PerformanceAnalyzer from "./PerformanceAnalyser"
-import GeneralPurposeReplUI from "./repl"
+import PerformanceAnalyzer from "./reports/PerformanceAnalyser"
+import GeneralPurposeReplUI from "./react-repl/repl"
 
 export default function Home() {
   return (
