@@ -8,6 +8,8 @@ export function ResourceList(setGenericState: (description: GenericListDefinitio
 		title: 'Allocation type',
 		type: 'allocation',
 		generic_target: setGenericState,
-		values: ["Resources", "Time", "Space", "Space-Storage", "Space-Memory", "Space-Cache", "Space-Register", "Space-Bit", "Space-Float", "Compute", "Compute-Multiply"]
+		values: ["Resources", "Time", "Space", "Space-Storage", "Space-Memory", 
+			"Space-Cache", "Space-Register", "Space-Bit", "Space-Float", "Compute", 
+			"Compute-Multiply"]
 	}} default='Compute'></GenericListDefinitionSelector>;
 }

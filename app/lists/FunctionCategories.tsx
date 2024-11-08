@@ -8,6 +8,6 @@ export function FunctionCategories(setGenericState: (description: GenericListDef
 		title: 'Category',
 		type: 'type unknown',
 		generic_target: setGenericState,
-		values: ["Network", "HTML", "Crypto"]
+		values: ["Network", "HTML", "Crypto","Pure","Type","Introspection"]
 	}} default='Crypto'></GenericListDefinitionSelector>;
 }

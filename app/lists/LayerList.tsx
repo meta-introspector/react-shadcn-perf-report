@@ -8,6 +8,7 @@ export function LayerList(setGenericState: (description: GenericListDefinition, 
 		title: 'Layer',
 		type: 'type unknown',
 		generic_target: setGenericState,
-		values: ["Hardware", "OS", "NodeJS", "Application/Wasm/Rust", "Application/Wasm/Ocaml", "Networking", "Application"]
+		values: ["Hardware", "OS", "NodeJS", "Application/Wasm/Rust", "Application/Wasm/Ocaml", "Networking", "Application","Hosting","Security","Financial",
+			"Audit","Backup","Parameters","Containerization","Introspection"]
 	}} default='Application'></GenericListDefinitionSelector>;
 }

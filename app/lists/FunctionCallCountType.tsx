@@ -8,6 +8,6 @@ function FunctionCallCountType(setGenericState: (description: GenericListDefinit
 		title: 'Count type',
 		type: 'type unknown',
 		generic_target: setGenericState,
-		values: ["Self Only", "With Children"]
+		values: ["Self Only", "With Children","probability distribution"]
 	}} default='With Children'></GenericListDefinitionSelector>;
 }

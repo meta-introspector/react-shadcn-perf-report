@@ -8,7 +8,7 @@ export function getDescription() :GenericListDefinition {
     title: 'Phase type',
     type: 'type unknown',
     //generic_target: setGenericState,
-    values: ["Beginning", "Middle", "End"]
+    values: ["Beginning", "Compile","Test","Deploy","Live","Middle", "End"]
   }
 }
 export function getDefault() :string {  return getDescription().values[0] }

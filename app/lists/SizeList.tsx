@@ -8,6 +8,6 @@ export function SizeList(setGenericState: (description: GenericListDefinition, v
 		title: 'Size type',
 		type: 'type unknown',
 		generic_target: setGenericState,
-		values: ["Big", "Small"]
+		values: ["Big", "Small","free-tier","lambda","single page app"]
 	}} default='Big'></GenericListDefinitionSelector>;
 }

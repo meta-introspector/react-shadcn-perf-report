@@ -8,7 +8,7 @@ export function ConsumingModeList(setGenericState: (description: GenericListDefi
 		title: 'Consuming Mode',
 		type: 'type unknown',
 		generic_target: setGenericState,
-		values: ["creating", "consuming"]
+		values: ["creating","transporting","networking","consuming"]
 	}} default='creating'>
 	</GenericListDefinitionSelector>;
 }

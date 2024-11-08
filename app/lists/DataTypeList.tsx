@@ -8,6 +8,6 @@ export function DataTypeList(setGenericState: (description: GenericListDefinitio
 		title: 'Data type',
 		type: 'data_type',
 		generic_target: setGenericState,
-		values: ["integer", "float", "string", "vector", "array", "dict/map", "object"]
+		values: ["integer", "float", "string", "vector", "array", "dict/map", "object","uu","types","typeclasses","monad"]
 	}} default='integer'></GenericListDefinitionSelector>;
 }

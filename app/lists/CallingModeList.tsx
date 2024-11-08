@@ -7,7 +7,7 @@ export function CallingModeList(setGenericState: (description: GenericListDefini
 		listName: "calling_mode",
 		title: 'Calling Mode',
 		type: 'type unknown',
-		values: ["caller", "callee"],
+		values: ["caller", "callee","internal","inlined"],
 		generic_target: setGenericState
 	}} default='caller'></GenericListDefinitionSelector>;
 }
