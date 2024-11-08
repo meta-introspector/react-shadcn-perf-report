@@ -3,13 +3,14 @@ import { useReducer, useCallback, useState, useDeferredValue } from "react";
 import { GenericListDefinition } from "./GenericListDefinition";
 import { GenericTable } from "./GenericTable";
 import { GitRepoSelector } from "./GitRepoSelector";
-import { GitHostingSelector } from "./HostingSelector";
+import { GenericList as GitHostingSelector } from "./GitHostingSelector";
 import { initialState } from "./initialState";
 import { Profile } from "./ProfileData";
 import { reportReducer } from "./reportReducer";
 import { TestCaseSelector } from "./TestCaseSelector";
 import { GenericList as PhaseList } from "./PhaseList";
 import { GenericList as LanguageList } from "./LanguageList";
+/*
 import { MathList } from "./MathList";
 import { ResourceList } from "./ResourceList";
 import { DataTypeList } from "./DataTypeList";
@@ -23,7 +24,8 @@ import { FunctionCategories } from "./FunctionCategories";
 import { LayerList } from "./LayerList";
 import { ConsumingModeList } from "./ConsumingModeList";
 import { CallingModeList } from "./CallingModeList";
-
+*/
+import { GenericList as ListOfLists } from "./ListOfLists";
 
 class PerfAttrsProps{
 	setSuggestion:any
@@ -32,18 +34,18 @@ class PerfAttrsProps{
 export function PerformanceAttributes(props:PerfAttrsProps) {
   const [state, dispatch] = useReducer(reportReducer, initialState);
 
-    const updateSelection = useCallback((key: string, value: string) => {
+  const updateSelection = useCallback((key: string, value: string) => {
     dispatch({ type: 'UPDATE_SELECTION', payload: { key, value } });
   }, []);
-
+  
   const generateReport = useCallback(() => {
     dispatch({ type: 'GENERATE_REPORT' });
   }, []);
-
+  
   const resetReport = useCallback(() => {
     dispatch({ type: 'RESET_REPORT' });
   }, []);
-
+  
   const handleSelectorChange = (definition: GenericListDefinition, value: string) => {
     updateSelection(definition.listName, value);
   };
@@ -73,30 +75,30 @@ export function PerformanceAttributes(props:PerfAttrsProps) {
       {name:"tes2",file:"test"}
     ]
   });
- 
+
+  // {ConsumingModeList(setGenericState)}      
+  // {LayerList(setGenericState)}      
+  // {FunctionCategories(setGenericState)}
+  // {CallingModeList(setGenericState)}
+  // {SizeList(setGenericState)}
+  // {SpeedList(setGenericState)}
   
+  // {MathList(setGenericState)}
+  // {ResourceList(setGenericState)}
+  // {DataTypeList(setGenericState)}
+  // {AccountList(setGenericState)}
+  // {SourceList(setGenericState)}
+  // {ModuleList(setGenericState)}
+  // {OperationList(setGenericState)}
+
   return (
     <div>
-      
-      <GitHostingSelector/>
+      {GitHostingSelector(setGenericState)}
       <GitRepoSelector/>
-	      <TestCaseSelector/>
-	      {CallingModeList(setGenericState)}
-      {ConsumingModeList(setGenericState)}      
-      {LayerList(setGenericState)}      
-      {FunctionCategories(setGenericState)}
-      {CallingModeList(setGenericState)}
-      {SizeList(setGenericState)}
-      {SpeedList(setGenericState)}
+      <TestCaseSelector/>
       {PhaseList(setGenericState)}
-      {LanguageList(setGenericState)}   
-      {MathList(setGenericState)}
-      {ResourceList(setGenericState)}
-      {DataTypeList(setGenericState)}
-      {AccountList(setGenericState)}
-      {SourceList(setGenericState)}
-      {ModuleList(setGenericState)}
-      {OperationList(setGenericState)}
+      {LanguageList(setGenericState)}
+      {ListOfLists(setGenericState)}
   <div>selected { JSON.stringify(deferredState, null, 2) } </div>
 </div>
   );

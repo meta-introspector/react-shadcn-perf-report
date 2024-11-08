@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 
 import { Profile } from "./ProfileData";
-import { GitHosting, GitRepository } from "./Hosting";
+import { GitHosting, GitRepository } from "./GitHostingTypes";
 import { Accounts } from "./Accounts";
 
 export function GitRepoSelector() {

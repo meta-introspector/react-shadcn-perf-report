@@ -4,12 +4,26 @@ import { GenericListDefinitionSelector } from "./ListSelector";
 
 export function ModuleList(setGenericState: (description: GenericListDefinition, value: string) => void) {
 	return <GenericListDefinitionSelector definition={{
-		listName: "Module",
+	  listName: "Module",
+	  description: "Generic ideas of modules to interface with things, the ordering of the list matters, there is a hierarchy in there",
 		title: 'Module',
 		type: 'Module',
 		generic_target: setGenericState,
-		values: ["npm", "os", "rust", "hw",
-			"react", "next", "aws", "https", "archive.org",
-			"wikimedia", "huggingface", "ipfs", "aws-ssm-parameter", "etc"]
+	  values: [
+	    "package-managers", "npm",
+	    "os","linux","windows","osx",
+	    "programming-langugages","rust",
+	    "hardware/machine descriptions",
+	    "node-frameworks","react","nextjs",
+	    "cloud-hosting", "aws",
+	    "protocols", "https",
+	    "artifact-storage","archive.org",
+	    "authentication","next-auth",	    
+	    "open-knowledge","wikimedia",
+	    "datasets","huggingface",
+	    "storage","ipfs",
+	    "vault","aws-ssm-parameter",
+	    "others","etc"
+	  ]
 	}} default='rust'></GenericListDefinitionSelector>;
 }

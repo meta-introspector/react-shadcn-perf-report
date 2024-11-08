@@ -25,4 +25,5 @@ export class GenericListDefinition {
   eval?: any; // eval this code in the the context of the list
   hex_dump?: any; // hex dump this value
   wasm?: any; // give wasm representation of this list
+  description?:any; // mostly text
 }

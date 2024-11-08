@@ -1,4 +1,4 @@
-import { GitHosting } from "./Hosting";
+import { GitHosting } from "./GitHostingTypes";
 import { LLMHosting } from "./LLMHosting";
 
 export type Resource = GitHosting|LLMHosting;

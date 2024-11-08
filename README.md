@@ -94,3 +94,25 @@ npm install graphql graphql-scalars type-graphql
 npm install reflect-metadata
 npm install core-js
 ```
+
+# Plan
+
+0. import or read the input data
+compile static data into react app
+0.2 secrets management
+0.1 in browser
+0.2 github application
+0.3 hugging face space with github auth logic
+1. Run augmented test jobs and record profile data locally via npm, or in github, or browser, 
+collect the data locally.
+1.1. Trigger by push version in git, run action as result. or local tests or even in browser 
+1.2. No sso for github in version 1
+2. manually download results zipfile and upload it, or login to github (paste github token into browser), env variable for github personal access token to login
+3. Port previous code to push results from github into public hosting like hugging face or github pages
+4. Dashboard can read public github or hugging face or local data from paste or localdb
+5. React native app or hugging face hosting or netlify or vercel
+6. The simple report wont allow public users to use github token, so no new data can be downloaded from github, need to login or authenticate first.
+
+Future Work:
+7. type-graphql	integration
+8. mikrorm integration

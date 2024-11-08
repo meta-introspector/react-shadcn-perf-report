@@ -18,23 +18,15 @@ import { getDescription as LanguageList } from "./LanguageList";
 // import { getDescription as ConsumingModeList } from "./ConsumingModeList";
 // import { getDescription as CallingModeList } from "./CallingModeList";
 
-// FIXME commented out
-// export function getListName(
-//   getGenericState:(() => GenericListDefinition),
-//   setGenericState: ((description: GenericListDefinition, value: string) => void)
-// ) {
-//      return getGenericState().listName
-// }
-
 // function render(x:any){
 //     return x(setGenericState)
 //   }
 
-export function ListOfList(setGenericState: (description: GenericListDefinition, value: string) => void) {
-	return <GenericListDefinitionSelector definition={{
+export function getDescription() :GenericListDefinition {
+  return {
 	  listName: "ListOfList",
 	  title: 'List of Lists',
-	  generic_target: setGenericState,// feedback
+    //generic_target: setGenericState,// feedback
 	  type: 'ListComponent',
 	  values: [
 	    "PhaseList",
@@ -63,5 +55,11 @@ export function ListOfList(setGenericState: (description: GenericListDefinition,
 	  // ModuleList,
 	  // OperationList
 	  ]
-	}} default='ListOfLists'></GenericListDefinitionSelector>;
+	}
 }
+
+export function getDefault() :string {  return getDescription().values[0] }
+export function GenericList(setGenericState: (description: GenericListDefinition, value: string) => void) {
+  return <GenericListDefinitionSelector definition={{... getDescription(), generic_target:setGenericState }} default={getDefault()}></GenericListDefinitionSelector>;
+}
+
