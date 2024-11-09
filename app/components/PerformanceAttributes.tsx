@@ -1,5 +1,5 @@
 "use client"
-import { useReducer, useCallback, useState, useDeferredValue } from "react";
+import { useReducer, useCallback, useState, useDeferredValue, SetStateAction, Key } from "react";
 import { GenericListDefinition } from "../generics/GenericListDefinition";
 import { GenericTable } from "../types/GenericTable";
 import { GitRepoSelector } from "../sources/GitRepoSelector";
@@ -8,8 +8,9 @@ import { initialState } from "../states/initialState";
 import { Profile } from "../types/ProfileData";
 import { reportReducer } from "../states/reportReducer";
 import { TestCaseSelector } from "../sources/TestCaseSelector";
-import { GenericList as PhaseList } from "../lists/PhaseList";
+import { GenericList as PhaseList, getDescription as getPhaseDescription } from "../lists/PhaseList";
 import { GenericList as LanguageList } from "../lists/LanguageList";
+import { GenericType } from "../generics/Loader"
 /*
 import { MathList } from "./MathList";
 import { ResourceList } from "./ResourceList";
@@ -75,6 +76,7 @@ export function PerformanceAttributes(props:PerfAttrsProps) {
       {name:"tes2",file:"test"}
     ]
   });
+
 
   // {ConsumingModeList(setGenericState)}      
   // {LayerList(setGenericState)}      

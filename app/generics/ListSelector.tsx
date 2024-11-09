@@ -1,6 +1,6 @@
 "use client"; // This is a client component
 
-import React, { useState, ReactNode, useEffect } from 'react';
+import React, { useState, ReactNode, useEffect, SetStateAction, Key } from 'react';
 import {
   Select,
   SelectContent,
@@ -11,12 +11,18 @@ import {
 
 import { Profile } from "../types/ProfileData";
 import { GenericListDefinition, GenericElement } from "./GenericListDefinition";
+import { GenericType } from './Loader';
 
 type GenericListProps = {
   definition: GenericListDefinition
   ,
   default: GenericElement
 }
+
+  function foo(value: SetStateAction<Key>): void {
+    throw new Error("Function not implemented.");
+  }
+
 export function GenericListDefinitionSelector(props:GenericListProps) {
 
   function listGenericList(x:GenericElement) :ReactNode {  
@@ -62,6 +68,11 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
           <SelectContent> {
             props.definition.values?.map(listGenericList)
           } </SelectContent>
-        </Select></span>
+      </Select>
+      {GenericType({
+	def:props.definition,
+	genericTypeId:props.definition.listName,
+	setGenericTypeId:foo})}
+    </span>
   )
 }

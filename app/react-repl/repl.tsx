@@ -25,23 +25,13 @@ const GeneralPurposeReplUI = () => {
   submitCodeRef.current = actionOnSubmit;
 
   const { submitCode, ReactRepl } = useReactReplJS();
-      //   onChangeTab={actionOnChangeTab}
-      // onSubmit={actionOnSubmit}
-      // submitCodeRef={submitCodeRef}
-  // onClear={actionOnClear}
-
-  // onChangeTab={function (tab: string): void {
-  //         //throw new Error("Function not implemented.");
-  // 	  console.log("change tag", tab);
-  // 	  submitCode('alert(`${tab}! This will appear in the REPL!`)');
-
-  //       } }
+  
   return  (
     <ReactRepl
       title={`test Repl!`}
       height={600}
 
-      // TODO and long term ideas that are out of scope :)
+      // TODO: FIXME: and long term ideas that are out of scope :)
       // generate and use graphql
       // generate and use sparql
       // visualize rdf graphs, tables, charts,
@@ -69,20 +59,8 @@ const GeneralPurposeReplUI = () => {
       // send to another app or chat window on android.
       // send to llm
       // generate and test js snippet with llm and browser
-      //lines={[
-      //          { type: "input", value: "obj = { something: 2 }" },
-      //          { type: "output", value: '{ "something": 2 }' },
-      //          { type: "input", value: "b" },
-      //   { type: "error", value: "TypeError: b is not defined" },
-      //]}
 
-      // onSubmit={function (input: string): void {
-      //     //throw new Error("Function not implemented.");
-      // 	  console.log("input", input, eval(input));
-      // 	  submitCode('alert(`${input}! This will appear in the REPL!`)');
-      // 	  //FIXME: lines.append({type:"input",value: input});
-	  
-      //   } }
+      
     />
   )
 }

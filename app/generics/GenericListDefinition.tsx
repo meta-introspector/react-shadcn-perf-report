@@ -1,6 +1,8 @@
 //@ObjectType()
 export type GenericElement = string;
 export class GenericListDefinition {
+  fetch?:any; // function pointer to get new data from outside  
+  fetch_id?:any;
   sub_components?: GenericListDefinition[]
   listName!: string; // name of list
   //default!: string;
