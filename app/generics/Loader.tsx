@@ -12,6 +12,7 @@ function useGenericTypes(def: GenericListDefinition) {
     queryKey: [],
     queryFn: async (): Promise<Array<GenericType>> => {
       const response = await def.fetch()
+      console.log("response1",response);
       return await response.json()
     },
   })
@@ -75,7 +76,12 @@ function Loader({
 
 const getGenericTypeById = async (id: GenericId, def: GenericListDefinition ): Promise<GenericType> => {
   const response = await def.fetch_id(id);
+  console.log(response);
+  if (response) {
   return await response.json()
+  } else {
+    return {id:"FIXME",title:"error", body:"body"}
+  }
 }
 
 function useGenericType(genericTypeId: GenericId, def: GenericListDefinition) {
@@ -107,7 +113,7 @@ export function GenericType({
       {!genericTypeId ? (
         'Loading...'
       ) : status === 'error' ? (
-        <span>Error: error</span>
+        <span>Error: error1 {status}</span>
       ) : (
         <>
           <h1>{data?.title}</h1>

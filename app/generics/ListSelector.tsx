@@ -41,15 +41,27 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
   //setGenericSelection(props.default);
   //console.log("debug",props,genericSelection)
 
+  function fetch_id(a:any) {
+    console.log("fetch id",a);  
+    return {
+      json : (()=>{
+	console.log("json called");
+	return {
+	  arg1: a,
+	  props: props,
+	  name:"superman"}
+      })
+    }
+  }
   function update(){
     //props.definition.generic_target(props.definition,props.default);
   }
   
-  // set the defaul callback
+  // set the default callback
   if (props.definition.generic_target) {
     //useEffect(update);
   }
-  
+  props.definition.fetch_id = fetch_id;
   return (
     <span>{props.definition?.title}:
       <Select value={genericSelection}
@@ -69,10 +81,15 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
             props.definition.values?.map(listGenericList)
           } </SelectContent>
       </Select>
-      {GenericType({
-	def:props.definition,
-	genericTypeId:props.definition.listName,
-	setGenericTypeId:foo})}
+
+      
+      {
+	GenericType({
+	  def:props.definition,
+	  genericTypeId:props.definition.listName,
+	  setGenericTypeId:foo
+	})
+      }
     </span>
   )
 }
