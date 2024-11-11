@@ -20,16 +20,12 @@ type GenericListProps = {
 }
 
   function foo(value: SetStateAction<Key>): void {
-    throw new Error("Function not implemented.");
+    //throw new Error("Function not implemented.");
+    console.log("selected",value);
   }
 
 export function GenericListDefinitionSelector(props:GenericListProps) {
 
-  function listGenericList(x:GenericElement) :ReactNode {  
-    let ret= <SelectItem key={x} value={x}>{x}</SelectItem>
-    //console.log(ret)
-    return ret
-  }
 /*  function findGenericList(x:GenericListDefinition,name: string) : GenericElement{
 //console.log(name);
     return x.values?.find(item=>item === name)||"not found";
@@ -37,7 +33,7 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
   */
 
   //  const [getGenericListDefinition, setGenericListDefinition] = useState<GenericListDefinition>(props.definition);
-  const [genericSelection,setGenericSelection] = useState<GenericElement>(props.default);
+  //const [genericSelection,setGenericSelection] = useState<GenericElement>(props.default);
   //setGenericSelection(props.default);
   //console.log("debug",props,genericSelection)
 
@@ -45,11 +41,12 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
     console.log("fetch id",a);  
     return {
       json : (()=>{
-	console.log("json called");
+	//console.log("json called");
 	return {
 	  arg1: a,
 	  props: props,
-	  name:"superman"}
+	
+	}
       })
     }
   }
@@ -64,25 +61,7 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
   props.definition.fetch_id = fetch_id;
   return (
     <span>{props.definition?.title}:
-      <Select value={genericSelection}
-	onValueChange={(value: string) => { 
-	  if (props.definition.target) {
-	    props.definition.target(value);
-	  };
-	  if (props.definition.generic_target) {
-	    console.log("generic target",props,value);
-	    props.definition.generic_target(props.definition,value);
-	  };
-	  return setGenericSelection(value)}}>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="Select {datatype.name}" />
-          </SelectTrigger>
-          <SelectContent> {
-            props.definition.values?.map(listGenericList)
-          } </SelectContent>
-      </Select>
-
-      
+     
       {
 	GenericType({
 	  def:props.definition,

@@ -27,6 +27,7 @@ import { ConsumingModeList } from "./ConsumingModeList";
 import { CallingModeList } from "./CallingModeList";
 */
 import { GenericList as ListOfLists } from "../lists/ListOfLists";
+import { createGenericListFunctions } from "../lists/Generic";
 
 class PerfAttrsProps{
 	setSuggestion:any
@@ -92,12 +93,20 @@ export function PerformanceAttributes(props:PerfAttrsProps) {
   // {SourceList(setGenericState)}
   // {ModuleList(setGenericState)}
   // {OperationList(setGenericState)}
-
+  const {getDescription, getDefault, GenericList:QueryLanguage } =createGenericListFunctions({
+  listName: "queryLanguage",
+  title: "query Language",
+  type: "QueryLanguage",
+  default: "sql",
+  values : ["sparql","react-query","graphql","jq","grep","sql"]
+ });
+ 
   return (
     <div>
       {GitHostingSelector(setGenericState)}
       <GitRepoSelector/>
       <TestCaseSelector/>
+      {QueryLanguage(setGenericState)}
       {PhaseList(setGenericState)}
       {LanguageList(setGenericState)}
       {ListOfLists(setGenericState)}

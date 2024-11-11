@@ -1,7 +1,16 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useState, useEffect, SetStateAction, Key } from 'react';
 import React, { ReactNode } from "react";
-import { GenericListDefinition } from "./GenericListDefinition";
-interface Key{}
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { GenericElement, GenericListDefinition } from "./GenericListDefinition";
+
 interface GenericType{
   id: GenericId;
   title: ReactNode;
@@ -66,7 +75,7 @@ function Loader({
                 </p>
               ))}
             </div>
-            <div>{isFetching ? 'Background Updating...' : ' '}</div>
+            <div>{isFetching ? 'Fetching...' : ' '}</div>
           </>
         )}
       </div>
@@ -101,27 +110,52 @@ export function GenericType({
   setGenericTypeId: React.Dispatch<React.SetStateAction<GenericId>>,
   def: GenericListDefinition
 }) {
-  const { status, data, error, isFetching } = useGenericType(genericTypeId,def)
+  function listGenericList(x:GenericElement) :ReactNode {  
+    let ret= <SelectItem key={x} value={x}>{x}</SelectItem>
+    //console.log(ret)
+    return ret
+  }
 
+  const { status, data, isFetching } = useGenericType(genericTypeId,def)
+  //console.log("testdata",data, status, isFetching, genericTypeId);
+  const [genericSelection,setGenericSelection] = useState<GenericElement>(def.default);
+  const selectValue = "select " + def.title;
+  //Data:{ JSON.stringify(data) }
   return (
-    <div>
-      <div>
-        <a onClick={() => setGenericTypeId(-1)} href="#">
-          Back
-        </a>
-      </div>
+    <div>   
       {!genericTypeId ? (
         'Loading...'
       ) : status === 'error' ? (
         <span>Error: error1 {status}</span>
       ) : (
-        <>
+        <div>
+	        <span>
+  <Select value={genericSelection}
+	  onValueChange={(value: string) => { 
+	    if (def.target) {
+	      def.target(value);
+	    };
+	    if (def.generic_target) {
+	      console.log("generic target",def,value);
+	      def.generic_target(def,value);
+	    };
+	    return setGenericSelection(value)}}>
+          <SelectTrigger className="w-48">
+            <SelectValue placeholder={selectValue} />
+          </SelectTrigger>
+          <SelectContent> {
+            def.values?.map(listGenericList)
+          } </SelectContent>
+      </Select>
+    </span>
+
           <h1>{data?.title}</h1>
           <div>
             <p>{data?.body}</p>
+	    
           </div>
-          <div>{isFetching ? 'Background Updating...' : ' '}</div>
-        </>
+          <div>{isFetching ? 'Fetch...' : ''}</div>
+        </div>
       )}
     </div>
   )

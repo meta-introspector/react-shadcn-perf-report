@@ -5,7 +5,7 @@ export class GenericListDefinition {
   fetch_id?:any;
   sub_components?: GenericListDefinition[]
   listName!: string; // name of list
-  //default!: string;
+  default!: string;
   title!: string; // title of list
   type!: string; // name of type of data of list
   values!: GenericElement [] // value of the type
