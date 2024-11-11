@@ -1,5 +1,5 @@
 "use client"
-import { useReducer, useCallback, useState, useDeferredValue, SetStateAction, Key } from "react";
+import { useReducer, useCallback, useState, useDeferredValue, SetStateAction, Key, AwaitedReactNode, JSXElementConstructor, ReactElement, ReactNode } from "react";
 import { GenericListDefinition } from "../generics/GenericListDefinition";
 import { GenericTable } from "../types/GenericTable";
 import { GitRepoSelector } from "../sources/GitRepoSelector";
@@ -28,7 +28,7 @@ import { CallingModeList } from "./CallingModeList";
 */
 import { GenericList as ListOfLists } from "../lists/ListOfLists";
 import { createGenericListFunctions } from "../lists/Generic";
-
+import { genericLists } from "../generics/enums"
 class PerfAttrsProps{
 	setSuggestion:any
 }
@@ -101,11 +101,32 @@ export function PerformanceAttributes(props:PerfAttrsProps) {
   values : ["sparql","react-query","graphql","jq","grep","sql"]
  });
  
+ function makeList(){
+  return (<div>todo</div>)  
+ }
+  //const newElements = genericLists.map()
+  //let reactList: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | null | undefined = []
+  let reactList : any[]= [];
+  for (const entry of genericLists.entries()) {
+    console.log("entry",entry);
+    const value = entry[1];
+    reactList.push((<div key={`Entry${value.name}`}>{value.component(setGenericState)}</div>));
+  }
+ 
+ //.keys().map(makeList);
+ //.map(makeList);
+ //function ({ GenericList: data }) {
+ //  const alist = data(setGenericState);
+ //  return (<div>hello{alist}</div>);
+ //})
+  console.log(reactList);
+  const newElements = <div key="somelist">{reactList}</div>
   return (
     <div>
       {GitHostingSelector(setGenericState)}
       <GitRepoSelector/>
       <TestCaseSelector/>
+      {newElements}
       {QueryLanguage(setGenericState)}
       {PhaseList(setGenericState)}
       {LanguageList(setGenericState)}

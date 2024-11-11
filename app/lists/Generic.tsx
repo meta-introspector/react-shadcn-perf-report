@@ -2,8 +2,6 @@
 import { GenericListDefinition } from "../generics/GenericListDefinition";
 import { GenericListDefinitionSelector } from "../generics/ListSelector";
 
-import { getDescription as PhaseList } from "./PhaseList";
-import { getDescription as LanguageList } from "./LanguageList";
 
 export function createGenericListFunctions(def: GenericListDefinition) {
   function getDescription() :GenericListDefinition {
