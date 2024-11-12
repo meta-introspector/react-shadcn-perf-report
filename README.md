@@ -1,4 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vision
+
+A react query based approach to introspection,
+the transformation of meta-data as caching and transformation. 
+
+## Analogy from math 
+
+Topological proof path.
+
+# Goal
+
+To construct o1js proofs of queries of introspective meta data from many sources using react query.
+To create proofs that include zkml, o1js, introspection, meta-math, unimath, coq, metacoq, 
+template haskell, graphql, sql, sparql all unified like a oroboros quine relay using proof paths of topology.
+To use the list of lists as the central data structure that we can translate between systems like a hub or wheel, a rotary club of sorts, the wheel of fortune, the ultimate dependent type, the single number that can select between all the types.
+
+# Plan
+
+Starting from an enum of enums, a list of lists, bootstrap a new system and construct larger and larger visual proofs.
+include more and more context and layers of observability as slices.
+contributions of functional sythentic data for training models.
 
 ## Getting Started
 
