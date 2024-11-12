@@ -1,3 +1,4 @@
+import { Value } from '@radix-ui/react-select';
 import * as Enums from '../lists/enums';
 import { createGenericListFunctions } from '../lists/Generic';
 import { GenericListDefinition } from './GenericListDefinition';
@@ -9,13 +10,25 @@ class Part {
   name! : string
 }
 
+
 //console.log("enumType1",Object.entries(Enums));
 //console.log("enumType2",Object.values(Enums));
 //console.log("enumType3",Object.keys(Enums));
 
 const enumLists : Part[] = Object.entries(Enums).map(([name, enumType]) => {
-
+  
   const values : string[] = Object.keys(enumType).map(key => enumType[Number(key)]).filter(value => typeof value === 'string') as string[];
+  // function getValues( key: string | number ){
+  //   console.log(key, name, enumType)
+  //   //const val= typeof enumType[key];
+  //   return "fixme";
+  // }
+  
+  // function getStrings(value: any){
+  //   return typeof value === 'string'
+  // }
+  
+  // const values : string[] = Object.keys(enumType).map(getValues).filter(getStrings) as string[];
 
   //const values :string[] = Object.keys(enumType)
   //.map(([name, enumType]) => name);

@@ -118,7 +118,8 @@ export function GenericType({
 
   const { status, data, isFetching } = useGenericType(genericTypeId,def)
   //console.log("testdata",data, status, isFetching, genericTypeId);
-  const [genericSelection,setGenericSelection] = useState<GenericElement>(def.default);
+  const defaultv = def.default || def.values[0]
+  const [genericSelection,setGenericSelection] = useState<GenericElement>(defaultv);
   const selectValue = "select " + def.title;
   //Data:{ JSON.stringify(data) }
   return (
@@ -148,11 +149,9 @@ export function GenericType({
           } </SelectContent>
       </Select>
     </span>
-
           <h1>{data?.title}</h1>
           <div>
-            <p>{data?.body}</p>
-	    
+            <p>{data?.body}</p>	    
           </div>
           <div>{isFetching ? 'Fetch...' : ''}</div>
         </div>

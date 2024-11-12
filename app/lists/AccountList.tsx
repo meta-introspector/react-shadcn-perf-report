@@ -6,6 +6,7 @@ export function AccountList(setGenericState: (description: GenericListDefinition
 	return <GenericListDefinitionSelector definition={{
 		listName: "account_type",
 		title: 'Account type',
+		default: "mina",
 		type: 'Account',
 		values: ["Traditional", "Bank", "Telephone", "Power", 
 			"Crypto","bitcoin", "mina", "bittensor", 
@@ -17,5 +18,5 @@ export function AccountList(setGenericState: (description: GenericListDefinition
 		  "aws", "google","netlify"
 		],
 		generic_target: setGenericState
-	}} default='Mina'></GenericListDefinitionSelector>;
+	}} default='mina'></GenericListDefinitionSelector>;
 }

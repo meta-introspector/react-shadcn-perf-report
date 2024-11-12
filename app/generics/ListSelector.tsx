@@ -13,7 +13,7 @@ import { Profile } from "../types/ProfileData";
 import { GenericListDefinition, GenericElement } from "./GenericListDefinition";
 import { GenericType } from './Loader';
 
-type GenericListProps = {
+export type GenericListProps = {
   definition: GenericListDefinition
   ,
   default: GenericElement

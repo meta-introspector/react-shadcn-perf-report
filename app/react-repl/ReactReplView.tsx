@@ -4,7 +4,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { LineT, ReactReplPropsT } from "./ReactReplTypes";
-import  { PerformanceAttributes } from "../components/PerformanceAttributes";
+import  { PerfAttrsProps, PerformanceAttributes } from "../components/PerformanceAttributes";
 const Container = styled.div`
 width: 1200px;
   font-family: monospace;
@@ -96,12 +96,16 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
     setSuggestion(suggestion)
   }
   const [historySelectIndex, setHistorySelectIndex] = useState<number>(-1);
+
   useEffect(() => {
     if (!terminalContentRef.current) return
     terminalContentRef.current.scrollTop =
       terminalContentRef.current.scrollHeight
   }, [lines])
   useEffect(() => setHistorySelectIndex(-1), [lines])
+
+  const props:PerfAttrsProps={setSuggestion}
+  const {element : myPerformanceAttributes,setGenericStateInternal,genericState} = PerformanceAttributes(props);
   return (
     <Container onClick={() => (stealFocus ? inputRef.current?.focus() : null)}>
     {(title || tabs) && (
@@ -133,7 +137,7 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
 
 	  <div >
 	  <ul><li>{suggestion}</li></ul>
-	  <PerformanceAttributes setSuggestion={setSuggestion}></PerformanceAttributes>
+	  {myPerformanceAttributes} 
 </div>
       <TerminalContent height={height} ref={terminalContentRef}>
       {lines?.map((line: LineT, i: number) =>
@@ -194,13 +198,9 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
       onChange={(e) => setActiveInputValue(e.target.value)}
       value={activeInputValue}
       ref={inputRef}
-	  />
-
-
-	  
+	  />  
     </ActiveInputLine>
       </TerminalContent>
-
     </Container>
   )
 }

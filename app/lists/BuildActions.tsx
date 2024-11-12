@@ -7,6 +7,7 @@ export function BuildActions(setGenericState: (description: GenericListDefinitio
 		listName: "build_actions",
 		title: 'Build Actions',
 		type: 'Actions',
+		default: "model",
 	  values: ["aquire", "configure", "compile", "link", "load", "simulate", "execute",
 	    "introspect","observe",
 	    "deploy","contain","download",

@@ -6,6 +6,7 @@ export function ConsumingModeList(setGenericState: (description: GenericListDefi
 	return <GenericListDefinitionSelector definition={{
 		listName: "consuming_mode",
 		title: 'Consuming Mode',
+		default:"creating",
 		type: 'type unknown',
 		generic_target: setGenericState,
 		values: ["creating","transporting","networking","consuming"]

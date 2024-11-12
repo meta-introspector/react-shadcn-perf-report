@@ -7,6 +7,7 @@ export function FunctionCategories(setGenericState: (description: GenericListDef
 		listName: "category",
 		title: 'Category',
 		type: 'type unknown',
+		default: "HTML",
 		generic_target: setGenericState,
 		values: ["Network", "HTML", "Crypto","Pure","Type","Introspection"]
 	}} default='Crypto'></GenericListDefinitionSelector>;

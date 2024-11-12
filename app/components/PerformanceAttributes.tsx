@@ -29,31 +29,19 @@ import { CallingModeList } from "./CallingModeList";
 import { GenericList as ListOfLists } from "../lists/ListOfLists";
 import { createGenericListFunctions } from "../lists/Generic";
 import { genericLists } from "../generics/enums"
-class PerfAttrsProps{
+export class PerfAttrsProps{
 	setSuggestion:any
 }
 
 export function PerformanceAttributes(props:PerfAttrsProps) {
-  const [state, dispatch] = useReducer(reportReducer, initialState);
-
-  const updateSelection = useCallback((key: string, value: string) => {
-    dispatch({ type: 'UPDATE_SELECTION', payload: { key, value } });
-  }, []);
-  
-  const generateReport = useCallback(() => {
-    dispatch({ type: 'GENERATE_REPORT' });
-  }, []);
-  
-  const resetReport = useCallback(() => {
-    dispatch({ type: 'RESET_REPORT' });
-  }, []);
   
   const handleSelectorChange = (definition: GenericListDefinition, value: string) => {
-    updateSelection(definition.listName, value);
+    //updateSelection(definition.listName, value);
+    console.log("DEBUG",definition,value);
   };
 
   const [genericState, setGenericStateInternal] = useState<GenericTable>({
-    "__self__" : "This is a self describing, content addressable Meta thought. Read the surrounding keys, and follow them in the context of a multi language open source environment. Create a typescript nextjs react Performance Report with the following selected features:"
+    "__self__" : "This is a self describing, content addressable Meta thought. Read the surrounding keys,"
   });
   const deferredState = useDeferredValue(genericState);
   function setGenericState(
@@ -121,7 +109,7 @@ export function PerformanceAttributes(props:PerfAttrsProps) {
  //})
   //console.log(reactList);
   const newElements = <div key="somelist">{reactList}</div>
-  return (
+  const element= (
     <div>
       {GitHostingSelector(setGenericState)}
       <GitRepoSelector/>
@@ -134,6 +122,7 @@ export function PerformanceAttributes(props:PerfAttrsProps) {
   <div>selected { JSON.stringify(deferredState, null, 2) } </div>
 </div>
   );
+  return {element, setGenericStateInternal, genericState }
 }
 
 export default PerformanceAttributes;

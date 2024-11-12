@@ -41,7 +41,7 @@ function Home2() {
 
 	  <GeneralPurposeReplUI/>
 	  
-	            <CacheSummary></CacheSummary>
+	  <CacheSummary></CacheSummary>
 	</main>
       <ReactQueryDevtools initialIsOpen={false} />
 

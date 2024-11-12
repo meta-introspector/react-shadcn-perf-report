@@ -6,6 +6,7 @@ function FunctionCallCountType(setGenericState: (description: GenericListDefinit
 	return <GenericListDefinitionSelector definition={{
 		listName: "count_type",
 		title: 'Count type',
+		default: "Self Only",
 		type: 'type unknown',
 		generic_target: setGenericState,
 		values: ["Self Only", "With Children","probability distribution"]
