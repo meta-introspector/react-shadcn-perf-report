@@ -3,17 +3,10 @@ import * as Enums from '../lists/enums';
 import { createGenericListFunctions } from '../lists/Generic';
 import { GenericListDefinition } from './GenericListDefinition';
 
-class Part {
-  //enum!: any
-  values!: string[]
-  //  parts!: string[]
+class Part {  
+  values!: string[]  
   name! : string
 }
-
-
-//console.log("enumType1",Object.entries(Enums));
-//console.log("enumType2",Object.values(Enums));
-//console.log("enumType3",Object.keys(Enums));
 
 const enumLists : Part[] = Object.entries(Enums).map(([name, enumType]) => {
   
@@ -40,9 +33,7 @@ const enumLists : Part[] = Object.entries(Enums).map(([name, enumType]) => {
   //console.log("enumType2",Object.values(enumType));
   //console.log("enumType3",Object.keys(enumType));
   const ret= {
-    //enum: enumType,
     values: values,
-    //    parts,
     name
   };
   return ret;

@@ -14,12 +14,10 @@ import { GenericListDefinition, GenericElement } from "./GenericListDefinition";
 import { GenericType } from './Loader';
 
 export type GenericListProps = {
-  definition: GenericListDefinition
-  ,
+  definition: GenericListDefinition,
   default: GenericElement
 }
-
-  function foo(value: SetStateAction<Key>): void {
+function foo(value: SetStateAction<Key>): void {
     //throw new Error("Function not implemented.");
     console.log("selected",value);
   }
