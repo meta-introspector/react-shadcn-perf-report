@@ -4,13 +4,12 @@
 import React, { useState, useEffect, FC } from "react";
 import { useReactReplJS } from "./useReactReplJS"
 import { ReactRepl    } from "./ReactReplView";
-import { Scope, LineT, LinesT, FCReactReplPropsT, ReactReplPropsT    } from "./types";
-
+import { Scope, LineT, LinesT, FCReactReplPropsT, ReactReplPropsT    } from "./ReactReplTypes";
 import prettyFormat from "pretty-format"
 
 const AsyncFunction: FunctionConstructor = Object.getPrototypeOf(async function () {}).constructor
 
-function scopeEval(scope: Scope, script: string): Promise<Scope> {
+function scopeEval(scope: any, script: string): Promise<Scope> {
   script = script
     .trim()
     .replace(/^var /, "")
@@ -19,10 +18,20 @@ function scopeEval(scope: Scope, script: string): Promise<Scope> {
   return AsyncFunction("return (" + script + ")").bind(scope)()
 }
 
+declare global {
+    interface Window { MyNamespace: any; }
+}
+
+
+
 async function execAndGetLine(execLine: string): Promise<LineT> {
+  //console.log("execAndGetLine", execLine);
    if (!execLine.trim()) return { type: "error", value: "Empty"}
-   try {
-     const evalOutput = await scopeEval(window, execLine)
+  try {
+    window.MyNamespace = window.MyNamespace || { };
+    window.MyNamespace= { foobar: 1 };
+    const evalOutput = await scopeEval(global, execLine)
+     //console.log("evalOutput", evalOutput);
      return { type: "output", value: prettyFormat(evalOutput) }
    } catch (e) {
        return { type: "error", value: JSON.stringify(e) }
@@ -30,6 +39,7 @@ async function execAndGetLine(execLine: string): Promise<LineT> {
  }
 
 export const ReactReplJS: FCReactReplPropsT = (args: ReactReplPropsT) => {
+  //console.log("repl",args)
   const title=args.title
   const tabs=args.tabs
   const selectedTab=args.selectedTab
@@ -42,13 +52,21 @@ export const ReactReplJS: FCReactReplPropsT = (args: ReactReplPropsT) => {
   const [lines, setLines] = useState<LinesT|undefined>(initialLines)
 
   const onSubmit = async (execLine: string) => {
-    if (lines) {
-     const newLines = lines.concat([{ type: "input", value: execLine }])
-     setLines(newLines)
-     if (!execLine.trim()) return
-      setLines(newLines.concat([await execAndGetLine(execLine)]))
+    //    console.log("onsubmit",lines)
+    let newLines:LinesT=[];
+    const new_node : LineT = { type: 'input', value: execLine };
+    const initial_list : LinesT =  [new_node];
+    if (!lines) {
+      newLines = initial_list;
     }
-   }
+    else {
+      newLines = lines.concat(initial_list);
+    }    
+    setLines(newLines)
+    if (!execLine.trim()) return
+    setLines(newLines.concat([await execAndGetLine(execLine)]))
+  }
+   
 
   if (submitCodeRef) submitCodeRef.current = onSubmit;
 
@@ -69,7 +87,6 @@ export const ReactReplJS: FCReactReplPropsT = (args: ReactReplPropsT) => {
   }, [])
 
   return (
-  <div> Test1
     <ReactRepl
       title={title}
       tabs={tabs || ["Javascript"]}
@@ -80,7 +97,6 @@ export const ReactReplJS: FCReactReplPropsT = (args: ReactReplPropsT) => {
       lines={lines}
       onClear={() => setLines([])}
     />
-    </div>
   )
 }
 

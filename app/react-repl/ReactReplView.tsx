@@ -3,9 +3,10 @@
 // converted with https://js2ts.com
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { LineT, ReactReplPropsT } from "./types";
-
+import { LineT, ReactReplPropsT } from "./ReactReplTypes";
+import  { PerfAttrsProps, PerformanceAttributes } from "../components/PerformanceAttributes";
 const Container = styled.div`
+width: 1200px;
   font-family: monospace;
   font-weight: bold;
   color: #fff;
@@ -90,13 +91,21 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalContentRef = useRef<HTMLDivElement>(null);
   const [activeInputValue, setActiveInputValue] = useState<string>("");
+  const [suggestion, setSuggestion] = useState<string>("No suggestion");
+  function mysetsuggestion(suggestion:string){
+    setSuggestion(suggestion)
+  }
   const [historySelectIndex, setHistorySelectIndex] = useState<number>(-1);
+
   useEffect(() => {
     if (!terminalContentRef.current) return
     terminalContentRef.current.scrollTop =
       terminalContentRef.current.scrollHeight
   }, [lines])
   useEffect(() => setHistorySelectIndex(-1), [lines])
+
+  const props:PerfAttrsProps={setSuggestion}
+  const {element : myPerformanceAttributes,setGenericStateInternal,genericState} = PerformanceAttributes(props);
   return (
     <Container onClick={() => (stealFocus ? inputRef.current?.focus() : null)}>
     {(title || tabs) && (
@@ -125,7 +134,12 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
 	  )}
 	</Header>
     )}
-    <TerminalContent height={height} ref={terminalContentRef}>
+
+	  <div >
+	  <ul><li>{suggestion}</li></ul>
+	  {myPerformanceAttributes} 
+</div>
+      <TerminalContent height={height} ref={terminalContentRef}>
       {lines?.map((line: LineT, i: number) =>
         line.type === "input" ? (
           <InputLine key={i}>
@@ -146,9 +160,9 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
 	    //      console.log("key up");
 	    if (e.key === "Enter") {
 	      ///        console.log("keyup enter");
-        if (onSubmit) {
+              if (onSubmit) {
 	        onSubmit(activeInputValue)
-        }
+              }
 	      setActiveInputValue("");
 	    } else if (e.key === "ArrowUp") {
 	      const newHSI = historySelectIndex + 1;
@@ -176,15 +190,18 @@ export function ReactRepl(args: ReactReplPropsT): React.JSX.Element {
 		}
 	      }
 	    }
+	    else {
+	      // now we can autocomplete
+	      setSuggestion("Some Suggestion")
+	    }
 	  }}
       onChange={(e) => setActiveInputValue(e.target.value)}
       value={activeInputValue}
       ref={inputRef}
-      />
+	  />  
     </ActiveInputLine>
-      
       </TerminalContent>
-	</Container>
+    </Container>
   )
 }
 

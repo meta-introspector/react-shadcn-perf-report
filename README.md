@@ -1,4 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vision
+
+A react query based approach to introspection,
+the transformation of meta-data as caching and transformation. 
+
+## Analogy from math 
+
+Topological proof path.
+
+# Goal
+
+To construct o1js proofs of queries of introspective meta data from many sources using react query.
+To create proofs that include zkml, o1js, introspection, meta-math, unimath, coq, metacoq, 
+template haskell, graphql, sql, sparql all unified like a oroboros quine relay using proof paths of topology.
+To use the list of lists as the central data structure that we can translate between systems like a hub or wheel, a rotary club of sorts, the wheel of fortune, the ultimate dependent type, the single number that can select between all the types.
+
+# Plan
+
+Starting from an enum of enums, a list of lists, bootstrap a new system and construct larger and larger visual proofs.
+include more and more context and layers of observability as slices.
+contributions of functional sythentic data for training models.
+
+## Chatgpt blurb
+
+Your vision to create a unified, introspective proof system using React Query and a variety of computational, mathematical, and meta-languages is an ambitious and deeply interdisciplinary approach. Here's a structured breakdown based on your goals and plan:
+
+Vision Breakdown:
+
+1. React Query as a Core System:
+
+React Query will handle data fetching, caching, and synchronization from multiple sources. This can be extended to manage meta-data and introspective data across different computational frameworks.
+
+It can be used to query introspective meta-data dynamically, enabling a responsive and adaptable system. The meta-data (information about information) serves as a key element for proving the consistency and integrity of the proofs, especially when transforming data between different representations.
+
+
+
+2. Topological Proof Path:
+
+Analogous to a mathematical proof path in topology, where different layers of a proof or argument are connected through continuous transformations, your system aims to ensure consistency and truth preservation through various transformations across systems.
+
+Each proof or transformation in the system could be understood as a "path" or "journey" through different data representations, ensuring both correctness and flexibility in the way transformations are applied.
+
+
+
+3. Unified Meta-Syntax and Proof Systems:
+
+Your goal is to blend and unify multiple proof systems (e.g., Coq, ZKML, GraphQL, SQL, etc.) into a cohesive structure. Each of these systems will interact with introspective meta-data, generating proofs that reflect transformations across different computational paradigms.
+
+The combination of dependent types (like in Template Haskell) and proof systems will allow for deep, verified introspection that ensures each layer is logically consistent and can be cross-verified using different frameworks.
+
+
+
+4. List of Lists as Central Data Structure:
+
+By leveraging a list of lists, you create a structure flexible enough to represent the complexity of data in a cross-system way. This can act as the foundation for mapping data between different formats and computing environments, much like a hub or rotary club.
+
+The ultimate dependent type could be the unifying structure that coordinates how types, proofs, and transformations interact with each other within this framework.
+
+
+
+5. Ouroboros Quine Relay:
+
+The Ouroboros analogy suggests a self-reflecting system where the proof system (like a Quine) can regenerate and verify itself in a continuous loop, ensuring that data transformations are valid across all layers.
+
+The proof system will be constructed such that, as you add complexity and depth to the model, each transformation and its proof remains verifiable and consistent, much like the self-sustaining nature of a Quine.
+
+
+
+
+Plan Execution:
+
+1. Start with Enum of Enums:
+
+Begin by structuring the data into nested enumerations. An "enum of enums" can serve as the starting point for defining the core types, categories, or classes of data. This will allow you to create a well-defined schema for your proofs.
+
+Use the lists to represent various levels of abstraction in the system, facilitating translation between different computational models (e.g., SQL to GraphQL, Coq to ZKML).
+
+
+
+2. Bootstrap the System:
+
+Once the core data structure (enum of enums) is defined, bootstrap a system around it using React Query to manage state, data flow, and caching.
+
+Integrate introspective data from various sources, allowing the system to continuously evolve and adapt. Each query or transformation becomes a new "proof path" that can be dynamically updated and validated.
+
+
+
+3. Construct Larger Visual Proofs:
+
+As the system evolves, construct increasingly complex proofs that visually represent the relationships between different types, queries, and transformations.
+
+These proofs will act as bridges between abstract logical concepts and concrete computational implementations, allowing users to see both the high-level structure and the underlying logic behind every operation.
+
+
+
+4. Incorporate Functional Synthetic Data:
+
+Incorporate synthetic data generation to train models and verify assumptions about the system. The functional nature of this synthetic data will ensure that the system remains flexible and can handle different types of proofs and transformations.
+
+This step helps validate the correctness of the system and serves as an ongoing feedback loop, ensuring that all components of the framework are operating correctly.
+
+
+
+5. Expand Context and Layers of Observability:
+
+As you build the system, layer more observability into each component. This could involve logging, visualization, and debugging tools to track how data flows and transforms across different layers.
+
+This step ensures that each proof path remains visible, verifiable, and introspectable, providing full transparency into how data is transformed and verified across the system.
+
+
+
+
+Next Steps:
+
+1. Prototype React Query Integration:
+
+Implement React Query to handle basic querying, caching, and data management from different introspective sources. Begin with a small set of transformations and proofs to test how data flows through the system.
+
+
+
+2. Develop Proof Path Visualization:
+
+Create a simple visual representation of how data flows between different layers, starting with a basic graph or map that shows how transformations and proofs are connected. This visualization will become more complex as the system grows.
+
+
+
+3. Incremental Integration of Proof Systems:
+
+Start integrating proof systems like ZKML, Coq, and others incrementally. Focus on how each system can contribute to the overall proofs, ensuring that they maintain compatibility and consistency.
+
+
+
+4. Explore Topological Proof Structures:
+
+Experiment with topological structures for proof paths, ensuring that transformations are continuous and logically sound. This might involve building algorithms for proof path expansion and verification.
+
+
+This vision represents an ambitious attempt to combine functional programming, type theory, proof systems, and data introspection into a unified system of verified transformations. It's a complex and evolving concept that will require iterative development, but it has the potential to radically enhance the way we understand and manage data transformations and proofs across systems.
+
 
 ## Getting Started
 
@@ -35,14 +173,16 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-# Lisp
+# Emacs Lisp
 
-Now i am just using lsp,
+Now I am just using lsp, with tide and it is working
 ```
 typescript-ts-mode
 (straight-use-package 'company-mode)
 lsp
 flycheck-mode
+tide-setup
+tide-mode
 ```
 
 Or
@@ -84,3 +224,33 @@ Checkers that are compatible with this mode, but will not run until properly con
 Flycheck Mode is enabled.  Use C-u C-c ! x to enable disabled
 
 ```
+# graphql 
+
+Added graphql
+```
+npm install graphql graphql-scalars type-graphql
+npm install reflect-metadata
+npm install core-js
+```
+
+# Plan
+
+0. import or read the input data
+compile static data into react app
+0.2 secrets management
+0.1 in browser
+0.2 github application
+0.3 hugging face space with github auth logic
+1. Run augmented test jobs and record profile data locally via npm, or in github, or browser, 
+collect the data locally.
+1.1. Trigger by push version in git, run action as result. or local tests or even in browser 
+1.2. No sso for github in version 1
+2. manually download results zipfile and upload it, or login to github (paste github token into browser), env variable for github personal access token to login
+3. Port previous code to push results from github into public hosting like hugging face or github pages
+4. Dashboard can read public github or hugging face or local data from paste or localdb
+5. React native app or hugging face hosting or netlify or vercel
+6. The simple report wont allow public users to use github token, so no new data can be downloaded from github, need to login or authenticate first.
+
+Future Work:
+7. type-graphql	integration
+8. mikrorm integration

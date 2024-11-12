@@ -3,7 +3,7 @@
 
 import React, { useMemo, useRef } from "react"
 import { ReactReplJS } from "./ReactReplJS"
-import type { EvalCodeFunction, ReactReplPropsT } from "./types"
+import type { EvalCodeFunction, ReactReplPropsT } from "./ReactReplTypes"
 
 export const useReactReplJS = () => {
   const submitCodeRef = useRef<EvalCodeFunction>()
