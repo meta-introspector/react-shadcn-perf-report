@@ -353,3 +353,283 @@ export enum EntityType {
   SelfEvolvingEntity,  // Entities that evolve through self-reference
 }
 
+// Module-level hierarchy
+export enum Module {
+  Core,
+  Networking,
+  DataProcessing,
+  UI,
+}
+
+// Function grouping by category
+export enum CoreFunctions {
+  Init,
+  Shutdown,
+  HealthCheck,
+}
+
+export enum NetworkingFunctions {
+  Connect,
+  Disconnect,
+  SendData,
+  ReceiveData,
+}
+
+export enum DataProcessingFunctions {
+  ParseData,
+  ValidateData,
+  ProcessData,
+}
+
+export enum UIFunctions {
+  Render,
+  UpdateUI,
+  HandleEvents,
+}
+
+// Function hierarchy within each module
+export enum CoreFunctionHierarchy {
+  Init_InitializeDatabase,
+  Init_SetupLogging,
+  Shutdown_CloseDatabase,
+  Shutdown_ClearCache,
+  HealthCheck_CheckServiceStatus,
+}
+
+export enum NetworkingFunctionHierarchy {
+  Connect_EstablishConnection,
+  Connect_Authenticate,
+  Disconnect_CloseConnection,
+  SendData_Serialize,
+  SendData_SendOverNetwork,
+  ReceiveData_Deserialize,
+  ReceiveData_HandleResponse,
+}
+
+export enum DataProcessingFunctionHierarchy {
+  ParseData_ParseCSV,
+  ParseData_ParseJSON,
+  ValidateData_CheckSchema,
+  ValidateData_CheckIntegrity,
+  ProcessData_ProcessBatch,
+  ProcessData_ProcessRealTime,
+}
+
+export enum UIFunctionHierarchy {
+  Render_RenderPage,
+  Render_RenderModal,
+  UpdateUI_UpdateElements,
+  UpdateUI_RefreshDisplay,
+  HandleEvents_OnClick,
+  HandleEvents_OnHover,
+}
+
+// More detailed introspection of the function behavior
+export enum FunctionIntrospection {
+  Init_InitializeDatabase_LogStart,
+  Init_SetupLogging_LogConfig,
+  Shutdown_CloseDatabase_ConfirmClose,
+  Shutdown_ClearCache_ClearMemory,
+  Connect_EstablishConnection_CheckTimeout,
+  SendData_Serialize_CheckDataFormat,
+  ProcessData_ProcessBatch_OptimizeForPerformance,
+  Render_RenderPage_RenderHeader,
+  Render_RenderPage_RenderFooter,
+  HandleEvents_OnClick_HandleClickAction,
+}
+
+// Contextualizing with metadata fields for each function
+export enum FunctionMetadata {
+  Init_InitializeDatabase_Timestamp,
+  Init_InitializeDatabase_ExecutionTime,
+  Connect_EstablishConnection_RetryCount,
+  SendData_Serialize_DataSize,
+  Render_RenderPage_Resolution,
+  HandleEvents_OnClick_UserAgent,
+}
+
+// Representing the semantic connections or dependencies
+export enum FunctionDependencies {
+  Init_InitializeDatabase_DatabaseService,
+  Connect_EstablishConnection_NetworkModule,
+  SendData_Serialize_EncodingService,
+  ProcessData_ProcessBatch_DataPipeline,
+  Render_RenderPage_CSS,
+  HandleEvents_OnClick_EventHandler,
+}
+// Flattened Branch Naming Patterns Enum
+export enum FlattenedBranchPattern {
+  Feature_Q_Name_Q,
+  Bugfix_Q_TicketId_Q,
+  Release_Q_Version_Q,
+  Hotfix_Q_TicketId_Q,
+}
+
+// Additional Context Enums
+
+// Enum for Repository Types
+export enum RepoType {
+  WebApp,
+  Backend,
+  API,
+  MobileApp,
+}
+
+// Enum for Branch Environment Types
+export enum BranchEnvironmentType {
+  Development,
+  Staging,
+  Production,
+}
+
+// Enum for Commit Types
+export enum CommitType {
+  Feature,
+  Bugfix,
+  Chore,
+  Refactor,
+  Docs,
+}
+
+// Enum for Branch Access Control
+export enum BranchAccess {
+  Public,
+  Private,
+  Restricted,
+}
+
+// Enum for Deployment Status
+export enum DeploymentStatus {
+  DeploymentPending,
+  InProgress,
+  Completed,
+  Failed,
+}
+
+// Enum for Code Review Status
+export enum CodeReviewStatus {
+  ReviewPending,
+  Approved,
+  Rejected,
+  NeedsChanges,
+}
+
+// Enum for Merge Strategies
+export enum MergeStrategy {
+  Merge,
+  Rebase,
+  Squash,
+}
+
+export enum CommitImpact {
+  Major, // Major changes that might break backward compatibility
+  Minor, // Minor updates with new features, but backward compatible
+  Patch, // Bug fixes or minor improvements
+}
+
+export enum ReleaseStage {
+  Development, // In development phase
+  QA, // In Quality Assurance testing
+  Staging, // Pre-production staging
+  Production, // Released to production
+  Deprecated, // No longer supported or maintained
+}
+
+export enum CodeOwner {
+  FrontendTeam, // Responsible for frontend code
+  BackendTeam, // Responsible for backend code
+  DevOpsTeam, // Responsible for infrastructure and deployment
+  SecurityTeam, // Responsible for security-related code
+  DataScienceTeam, // Responsible for data analysis or ML code
+}
+
+export enum PullRequestStatus {
+  Open, // PR is open and under review
+  Merged, // PR has been merged
+  Closed, // PR was closed without merging
+  Draft, // PR is still a draft
+  InProgress, // PR is being worked on
+}
+export enum DeploymentEnvironment {
+  Development, // Development environment
+  Staging, // Staging environment
+  Production, // Live production environment
+  QA, // Quality Assurance environment
+  UAT, // User Acceptance Testing environment
+  Testing, // General testing environment
+}
+export enum IssueType {
+  Bug, // A bug or defect
+  FeatureRequest, // Request for a new feature
+  Enhancement, // Suggestion to improve an existing feature
+  Documentation, // Issues related to documentation
+  Question, // General inquiries or clarifications
+  Task, // A specific task to be done
+}
+
+export enum BranchProtectionRule {
+  RequirePullRequestReviews, // Requires at least one pull request review
+  RequireStatusChecks, // Requires successful status checks
+  RestrictPushes, // Restricts who can push to the branch
+  RequireSignedCommits, // Requires commits to be signed
+  EnforceAdmins, // Enforces protection rules for admins as well
+}
+
+
+export enum CodeQualityLevel {
+  Excellent, // No issues detected
+  Good, // Some minor issues, but generally healthy
+  NeedsImprovement, // Multiple areas of concern
+  Failing, // Major issues, needs refactor
+}
+
+
+export enum DependencyType {
+  Direct, // Direct dependencies required for the project
+  Development, // Development dependencies (e.g., testing, build tools)
+  Peer, // Peer dependencies that should be provided by the consumer
+  Optional, // Optional dependencies
+  DevOps, // Dependencies for CI/CD pipelines or infrastructure
+}
+
+
+export enum CIAction {
+  Build, // Build stage of the CI/CD pipeline
+  Test, // Testing stage
+  Lint, // Code linting or quality check
+  Deploy, // Deployment stage
+  Release, // Releasing version to production
+}
+
+
+export enum CommitMethod {
+  Merge, // Regular merge commit
+  Squash, // Squash and merge
+  Rebase, // Rebasing commits
+  FastForward, // Fast-forward merge
+}
+
+export enum PRMergeStrategy {
+  Merge, // Standard merge
+  Squash, // Squash and merge
+  Rebase, // Rebase and merge
+  None, // No merge strategy applied
+}
+
+
+export enum ErrorSeverity {
+  Critical, // Critical errors that need immediate attention
+  High, // High-priority errors
+  Medium, // Medium-priority errors
+  Low, // Low-priority or warning errors
+}
+
+export enum ProgrammingLanguage {
+  TypeScript, // TypeScript language
+  JavaScript, // JavaScript language
+  Python, // Python language
+  Go, // Go language
+  Rust, // Rust language
+  Java, // Java language
+}
+
