@@ -38,7 +38,7 @@ export function GenericListDefinitionSelector(props:GenericListProps) {
   //console.log("debug",props,genericSelection)
 
   function fetch_id(a:any) {
-    console.log("fetch id",a);  
+    //console.log("fetch id",a);  
     return {
       json : (()=>{
 	//console.log("json called");

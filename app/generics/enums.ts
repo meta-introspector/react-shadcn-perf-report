@@ -1,4 +1,3 @@
-import { Key } from 'react';
 import * as Enums from '../lists/enums';
 import { createGenericListFunctions } from '../lists/Generic';
 import { GenericListDefinition } from './GenericListDefinition';
@@ -10,23 +9,23 @@ class Part {
   name! : string
 }
 
-console.log("enumType1",Object.entries(Enums));
-console.log("enumType2",Object.values(Enums));
-console.log("enumType3",Object.keys(Enums));
+//console.log("enumType1",Object.entries(Enums));
+//console.log("enumType2",Object.values(Enums));
+//console.log("enumType3",Object.keys(Enums));
 
 const enumLists : Part[] = Object.entries(Enums).map(([name, enumType]) => {
 
-  const values : string[] = Object.keys(enumType).map(key => enumType[key]).filter(value => typeof value === 'string') as string[];
+  const values : string[] = Object.keys(enumType).map(key => enumType[Number(key)]).filter(value => typeof value === 'string') as string[];
 
   //const values :string[] = Object.keys(enumType)
   //.map(([name, enumType]) => name);
-  //  const parts = name.split(/(?=[A-Z])/).map((part) => part.toLowerCase());
-   console.log("name",name);
-   console.log("DEBUG values",values );
-  console.log("enumType",enumType);
-  console.log("enumType1",Object.entries(enumType));
-  console.log("enumType2",Object.values(enumType));
-  console.log("enumType3",Object.keys(enumType));
+  //const parts = name.split(/(?=[A-Z])/).map((part) => part.toLowerCase());
+  //console.log("name",name);
+  //console.log("DEBUG values",values );
+  //console.log("enumType",enumType);
+  //console.log("enumType1",Object.entries(enumType));
+  //console.log("enumType2",Object.values(enumType));
+  //console.log("enumType3",Object.keys(enumType));
   const ret= {
     //enum: enumType,
     values: values,
@@ -39,7 +38,7 @@ const enumLists : Part[] = Object.entries(Enums).map(([name, enumType]) => {
 class Desc {
   name!:string
   description!:()=>GenericListDefinition
-  default!:any
+  default!:()=>string
   component!:renderFT
 }
 type Key1 = string | number | symbol;
@@ -53,23 +52,24 @@ type renderFT= (setGenericState: (description: GenericListDefinition,
 //function callback (acc: Map1, obj1 :Part ): Map1
 function callback(acc:any, obj1:Part, index:number, array1:any): any
 {
-  console.log("CALLBACK",acc,obj1, index, array1);  
+  //console.log("CALLBACK",acc,obj1, index, array1);  
   const enumType = obj1.values
   const name1 = obj1?.name
   //  const parts = obj1?.parts
   const values = Object.values(enumType);
-  console.log("DEBUG obj",obj1);
-  console.log("DEBUG enum type",enumType);
+  //console.log("DEBUG obj",obj1);
+  //console.log("DEBUG enum type",enumType);
   //console.log("DEBUG3",name1);
   //console.log("DEBUG parts",parts);
   //console.log("DEBUG4",values);
   const { 
     getDescription, 
     getDefault, 
-    GenericList } = createGenericListFunctions(
+    GenericList 
+  } = createGenericListFunctions(
     {
       listName: name1,
-      default: values[0][0],
+      default: values[0],
       title: name1,
       type: name1,
       values: values
@@ -79,8 +79,7 @@ function callback(acc:any, obj1:Part, index:number, array1:any): any
     description: getDescription,
     default: getDefault,
     component: GenericList
-  };
-  
+  };  
   acc.set(name1,obj);
   return acc;
 }

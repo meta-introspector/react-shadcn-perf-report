@@ -85,7 +85,7 @@ function Loader({
 
 const getGenericTypeById = async (id: GenericId, def: GenericListDefinition ): Promise<GenericType> => {
   const response = await def.fetch_id(id);
-  console.log(response);
+  //console.log(response);
   if (response) {
   return await response.json()
   } else {

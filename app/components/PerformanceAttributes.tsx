@@ -108,7 +108,7 @@ export function PerformanceAttributes(props:PerfAttrsProps) {
   //let reactList: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | null | undefined = []
   let reactList : any[]= [];
   for (const entry of genericLists.entries()) {
-    console.log("entry",entry);
+    //console.log("entry",entry);
     const value = entry[1];
     reactList.push((<div key={`Entry${value.name}`}>{value.component(setGenericState)}</div>));
   }
@@ -119,7 +119,7 @@ export function PerformanceAttributes(props:PerfAttrsProps) {
  //  const alist = data(setGenericState);
  //  return (<div>hello{alist}</div>);
  //})
-  console.log(reactList);
+  //console.log(reactList);
   const newElements = <div key="somelist">{reactList}</div>
   return (
     <div>
