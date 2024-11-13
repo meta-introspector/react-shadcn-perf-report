@@ -20,6 +20,43 @@ Starting from an enum of enums, a list of lists, bootstrap a new system and cons
 include more and more context and layers of observability as slices.
 contributions of functional sythentic data for training models.
 
+## Goals
+
+### Create a query
+on load merge the defaults with the user selection and create a full definition.
+include all the relevant context in the blob of data.
+flatten each feature into longer names. 
+include the definition of all types as default selections of hyperparameters.
+each type is really a hyperparamter value or variable in a higher ordered system, a sequence of values, selected from some list of lists or one of thier values. 
+
+### PLAN 
+
+We want to be able to compose components from the repl, creating lists boxes to allow the user to
+select between items of a different type, the first selection is the list of lists, the second is a value from that selected list or feature f. we can continue this process to create a stack of selections.
+we can then save this selection as a name in the environment and visualize it, even as it is building.
+we can order the selections in a predictive manner to put the most likely one already as the first or default,
+the most significant choices can be put in the beginning. 
+we can create tables and graphs and plots like a juypter notebook.
+we want to convert the states of the repl, and basically all the use states convert those into react query,
+we will use react query to label the cache all the data. even git access or github action run access.
+we will load in the huggingface reports and add more workflows to collect and publish to different sources.
+we will review and adapt the github actions from the different projects into a common repository.
+
+#### in the future we want to add more features 
+
+We want to query each list automatically while the user is typing and automatically suggest more items from the listboxes or change the display to highlight them visually. we can think of converting the lists into a regex that would match any part of it. we also want to process the labels and vectorize them.
+we can imagine that we can unify the different items into a new list via llms,
+finding relationships between them and declaring that knowledge as new types, 
+see for example `app/lists/meta_enums.ts` as a draft in relating enums via triples in the type layer.
+
+```typescript
+type IntrospectionIsAView = {
+  subject: FunctionIntrospection
+  predicate : IsA
+  object: DetailedFunctionView
+};
+```
+
 ## Chatgpt blurb
 
 Your vision to create a unified, introspective proof system using React Query and a variety of computational, mathematical, and meta-languages is an ambitious and deeply interdisciplinary approach. Here's a structured breakdown based on your goals and plan:
