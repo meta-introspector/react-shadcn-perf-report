@@ -8,10 +8,10 @@ type QueryData = {props: GenericListProps};
 function someList(props: Map<any,any>) {
   const data1 = Array.from(props.entries())
   const listItems = data1.map(([k,v]) =>
-    <li key={k}>{k} {v}</li>
+    <li key={k}>{k}: {v}</li>
   );
   return (
-    <div>Hello
+    <div>
     <ul>{listItems}</ul>
     </div>
   );
@@ -26,12 +26,12 @@ function getData(queries: any[]){
     // Extract the query key and data
     const queryKey = query.queryKey.join('_'); // Flattening query key to a single string
     const queryData: QueryData = query.state.data as QueryData;
-    console.log("LOG1",queryKey,"QD",queryData,"CD",cacheData);      
+    //console.log("LOG1",queryKey,"QD",queryData,"CD",cacheData);      
       if (queryData) {
         const defaultv = queryData.props.definition.default|| queryData.props.definition.values[0]
 	cacheData.set(queryData.props.definition.listName,defaultv)
       }else{
-	console.log("ERR",query.state.data)
+	//console.log("ERR",query.state.data)
       }
     });
 
